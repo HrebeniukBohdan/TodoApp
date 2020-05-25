@@ -1,0 +1,21 @@
+<div class="in-modal-container">
+  <mat-toolbar class="in-toolbar"
+               [ngClass]="{ 'error': !type }"
+               fxLayout="row"
+               fxLayoutAlign="center center">
+    <span class="in-title" fxFlex>{{ title }}</span>
+  </mat-toolbar>
+
+  <div class="in-modal-body">
+    <div *ngIf="!arrayMessage" class="title" [innerHTML]="message"></div>
+
+    <div *ngIf="arrayMessage" class="title" fxLayout="column">
+      <div *ngFor="let item of message">{{ item }}</div>
+    </div>
+
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" class="in-actions">
+      <button mat-stroked-button (click)="close(false)" class="secondary" *ngIf="cancelButton" fxFlex>No</button>
+      <button mat-stroked-button (click)="close(true)" fxFlex>{{ cancelButton ? 'Yes' : 'Ok' }}</button>
+    </div>
+  </div>
+</div>

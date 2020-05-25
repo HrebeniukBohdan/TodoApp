@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>{{ drawer.opened ? 'menu_open' : 'menu' }}</mat-icon>
+    </button>
+    <span fxFlex></span>
+    <button mat-icon-button (click)="logOut()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-drawer-container class="sidenav-menu">
+  <mat-drawer class="menu" #drawer [mode]="'over'">
+    <app-menu [menuItems]="menuItems"></app-menu>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="viewport">
+      <router-outlet></router-outlet>
+    </div>
+    <app-loading-screen [showProgressBar]="true"></app-loading-screen>
+  </mat-drawer-content>
+</mat-drawer-container>

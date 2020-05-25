@@ -1,0 +1,23 @@
+@import '~src/theme';
+
+.menu-item {
+  display: flex;
+  height: 36px;
+  align-items: center;
+  padding-left: 10px;
+  font-weight: bolder;
+  cursor: pointer;
+
+  span {
+    padding-left: 10px;
+  }
+
+  &:hover {
+    background-color: mat-color($accent, 100);
+  }
+
+  &.active {
+    background-color: mat-color($accent);
+    color: mat-contrast($accent, default);
+  }
+}

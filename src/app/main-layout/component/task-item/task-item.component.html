@@ -1,0 +1,7 @@
+<div class="task" matRipple [ngClass]="data.proirity" [class.disabled]="data.completed">
+  <mat-checkbox [ngModel]="data.completed" color="primary" [disabled]="data.completed" (click)="onCheckboxClick($event)"></mat-checkbox>
+  <div fxLayout="row" fxFlex (click)="editClick.emit()">
+    <span class="text" fxFlex>{{ data.title }}</span>
+    <mat-icon *ngIf="data.desc">description</mat-icon>
+  </div>
+</div>

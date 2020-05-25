@@ -1,0 +1,7 @@
+{
+  "serviceEndpoints": {
+    "task": "http://localhost:3001",
+    "profile": "http://localhost:3001",
+    "auth": "http://localhost:3001"
+  }
+}

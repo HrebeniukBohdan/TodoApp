@@ -1,0 +1,46 @@
+.task {
+  display: flex;
+  min-height: 38px;
+  padding: 0 10px;
+  align-items: center;
+  border-left: red 10px solid;
+
+  &.high {
+    border-color: red;
+  }
+
+  &.medium {
+    border-color: orange;
+  }
+
+  &.low {
+    border-color: green;
+  }
+
+  &.disabled {
+    border-color: darkgray;
+    color: darkgray;
+  }
+
+  .text {
+    margin-left: 9px;
+  }
+}
+
+::ng-deep .task mat-checkbox {
+  .mat-checkbox-layout .mat-checkbox-label {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+mat-icon {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkgray;
+}
+
+

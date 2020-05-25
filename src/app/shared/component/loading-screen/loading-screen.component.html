@@ -1,0 +1,9 @@
+<ng-container *ngIf="showProgressBar">
+  <mat-progress-bar class="progress-bar" mode="query" *appSpinnerShown></mat-progress-bar>
+</ng-container>
+<div class="loading-screen"
+     @appearTrigger
+     *appSpinnerShown
+     [style.position]="fullScreen ? 'fixed' : 'absolute'">
+  <mat-spinner [diameter]="50"></mat-spinner>
+</div>

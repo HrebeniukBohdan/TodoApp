@@ -1,0 +1,60 @@
+import { SaveChangesGuard } from './guard/save-changes.guard';
+import { TaskService } from './service/task.service';
+import { TasksPageComponent } from './layout/tasks-page/tasks-page.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { MainRoutingModule } from './main-routing.module';
+import { MainComponent } from './layout/main/main.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatRippleModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+
+import { MenuComponent } from './component/menu/menu.component';
+import { SettingsPageComponent } from './layout/settings-page/settings-page.component';
+import { TaskPageComponent } from './layout/task-page/task-page.component';
+import { TaskItemComponent } from './component/task-item/task-item.component';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { SharedModule } from '../shared/shared.module';
+import { SortCompletedPipe } from './pipe/sort-completed.pipe';
+
+@NgModule({
+  declarations: [
+    MainComponent,
+    TasksPageComponent,
+    MenuComponent,
+    SettingsPageComponent,
+    TaskPageComponent,
+    TaskItemComponent,
+    SortCompletedPipe
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    FlexLayoutModule,
+    MainRoutingModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatRippleModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    SharedModule
+  ],
+  providers: [
+    TaskService,
+    SaveChangesGuard
+  ]
+})
+export class MainModule { }

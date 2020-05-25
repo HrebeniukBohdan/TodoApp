@@ -1,0 +1,18 @@
+.sidenav-menu {
+  height: calc(100% - 64px);
+}
+
+.menu {
+  width: 300px;
+}
+
+@media (max-width: 599px) {
+  .sidenav-menu {
+    height: calc(100% - 56px);
+  }
+}
+
+.viewport {
+  height: 100%;
+  overflow: hidden;
+}

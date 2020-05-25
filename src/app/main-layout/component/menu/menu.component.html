@@ -1,0 +1,9 @@
+<div *ngFor="let item of menuItems"
+        class="menu-item"
+        matRipple
+        routerLink="/{{item.routerLink}}"
+        routerLinkActive="active"
+      >
+  <mat-icon>{{ item.icon }}</mat-icon>
+  <span>{{ item.title }}</span>
+</div>

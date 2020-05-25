@@ -1,0 +1,5 @@
+<div class="message-box" [ngClass]="config.style">
+  <mat-icon class="btn-close" (click)="closeClick.emit()">close</mat-icon>
+  <mat-icon class="icon">{{config.icon}}</mat-icon>
+  <ng-content></ng-content>
+</div>
