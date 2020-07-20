@@ -11,9 +11,9 @@
     {
       "title": "Create something",
       "desc": "gdfgdggdgdfg",
-      "proirity": "high",
+      "proirity": "medium",
       "completed": false,
-      "creationDate": 1589295082623,
+      "creationDate": "2020-05-12T14:51:22.623Z",
       "id": 2
     },
     {
@@ -49,8 +49,8 @@
       "id": 6
     },
     {
-      "title": "New task70 ghfh",
-      "desc": "yytyttry",
+      "title": "New task70",
+      "desc": "yytyttry  ",
       "proirity": "low",
       "creationDate": "2020-05-12T15:41:26.979Z",
       "completed": false,
@@ -73,7 +73,7 @@
       "id": 9
     },
     {
-      "title": "рпттмт",
+      "title": "hghfhghf",
       "desc": "митмтмт",
       "proirity": "medium",
       "creationDate": "2020-05-12T16:38:01.852Z",
@@ -85,7 +85,7 @@
       "desc": "апрар",
       "proirity": "low",
       "creationDate": "2020-05-12T16:38:42.156Z",
-      "completed": false,
+      "completed": true,
       "id": 11
     },
     {
@@ -173,7 +173,7 @@
       "desc": "fghgfhfh",
       "proirity": "low",
       "creationDate": 1589805226033,
-      "completed": false,
+      "completed": true,
       "id": 22
     },
     {
@@ -181,8 +181,24 @@
       "desc": "mnmbnmbnm",
       "proirity": "low",
       "creationDate": 1589906129563,
-      "completed": false,
+      "completed": true,
       "id": 23
+    },
+    {
+      "title": "tiuuyi",
+      "desc": "trtetet",
+      "proirity": "high",
+      "creationDate": "2020-06-09T14:37:02.372Z",
+      "completed": false,
+      "id": 24
+    },
+    {
+      "title": "abra-cadabra",
+      "desc": "",
+      "proirity": "low",
+      "creationDate": 1591973358596,
+      "completed": false,
+      "id": 25
     }
   ]
 }

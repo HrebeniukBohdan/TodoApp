@@ -1,4 +1,3 @@
-import { SaveChangesGuard } from './guard/save-changes.guard';
 import { TaskService } from './service/task.service';
 import { TasksPageComponent } from './layout/tasks-page/tasks-page.component';
 import { NgModule } from '@angular/core';
@@ -15,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { MenuComponent } from './component/menu/menu.component';
 import { SettingsPageComponent } from './layout/settings-page/settings-page.component';
@@ -50,11 +50,11 @@ import { SortCompletedPipe } from './pipe/sort-completed.pipe';
     MatProgressSpinnerModule,
     MatInputModule,
     MatButtonToggleModule,
+    MatRadioModule,
     SharedModule
   ],
   providers: [
-    TaskService,
-    SaveChangesGuard
+    TaskService
   ]
 })
 export class MainModule { }

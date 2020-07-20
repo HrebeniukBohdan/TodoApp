@@ -1,3 +1,4 @@
+import { SaveChangesGuard } from './guard/save-changes.guard';
 import { AuthGuard } from './guard/auth.guard';
 import { NgModule, Inject, SkipSelf, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -19,7 +20,8 @@ import { AuthService } from './service/auth.service';
       multi: true
     },
     AuthService,
-    AuthGuard
+    AuthGuard,
+    SaveChangesGuard
   ]
 })
 export class CoreModule {

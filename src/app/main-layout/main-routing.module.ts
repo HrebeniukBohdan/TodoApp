@@ -1,4 +1,4 @@
-import { SaveChangesGuard } from './guard/save-changes.guard';
+import { SaveChangesGuard } from '../core/guard/save-changes.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 

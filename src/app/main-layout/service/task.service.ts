@@ -95,7 +95,8 @@ export class TaskService {
   }
 
   public fetchTasks(): Observable<TaskData[]> {
-    return this.api.get<ITaskRawData[]>(ServiceType.TASK, 'tasks').pipe(
+    return this.tasks ? of([...this.tasks]) :
+    this.api.get<ITaskRawData[]>(ServiceType.TASK, 'tasks').pipe(
       map(tasksRaw => tasksRaw.map(raw => new TaskData().deserialize(raw))),
       tap(tasks => this.tasksSubject.next(tasks))
     );

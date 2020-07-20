@@ -1,5 +1,5 @@
 import { UtilsService } from './../../../shared/service/utils.service';
-import { CanComponentDeactivate } from './../../guard/save-changes.guard';
+import { CanComponentDeactivate } from '../../../core/guard/save-changes.guard';
 import { ITaskCreationalData, TaskData, TaskPriority } from './../../service/task.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';

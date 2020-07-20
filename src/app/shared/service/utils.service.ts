@@ -16,7 +16,7 @@ export class UtilsService {
         message,
         cancelButton: confirmation,
       },
-      minWidth: '90vw',
+      maxWidth: '100vw'
     });
 
     return dialogRef.afterClosed();

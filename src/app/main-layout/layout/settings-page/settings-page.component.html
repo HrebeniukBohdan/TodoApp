@@ -1,1 +1,25 @@
-<p>settings-page works!</p>
+<form fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutGap.gt-xs="20px" fxFlex>
+    <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 20px)">
+      <mat-label>User name</mat-label>
+      <input matInput name="userName" placeholder="Enter your name..." value="Sushi">
+    </mat-form-field>
+
+    <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 20px)">
+      <mat-label>User surname</mat-label>
+      <input matInput name="userSurname" placeholder="Enter your surname...">
+    </mat-form-field>
+  </div>
+
+  <mat-label class="label">Choose a mode:</mat-label>
+  <mat-radio-group name="radioGroup" class="group" [(ngModel)]="currentMode" fxFlex="100%" fxLayout="row wrap">
+    <mat-radio-button *ngFor="let mode of modes" [value]="mode" fxFlex.xs="50%" fxFlex.gt-xs class="item">
+      {{mode}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <mat-label class="label">Parameters:</mat-label>
+  <div class="group" fxFlex="100%" fxLayout="row wrap">
+    <mat-checkbox *ngFor="let param of parameters" fxFlex.xs="50%" fxFlex.gt-xs class="item">{{param}}</mat-checkbox>
+  </div>
+</form>
