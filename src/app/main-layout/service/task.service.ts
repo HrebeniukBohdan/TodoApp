@@ -1,83 +1,9 @@
+import { TaskData, ITaskRawData, ITaskCreationalData, ITaskData } from '@main-layout/model/tasks.model';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { API_SERVICE, IApiService } from '../../shared/service/api.service';
+import { API_SERVICE, IApiService } from '@shared/service/api.service';
 import { Injectable, Inject } from '@angular/core';
 import { tap, map } from 'rxjs/operators';
-import { ServiceType } from 'src/app/core/enum/enum';
-
-export type TaskPriority = 'low'|'medium'|'high';
-
-export interface ITaskData extends ITaskCreationalData {
-  id: number;
-  creationDate: Date;
-  completed: boolean;
-}
-
-export interface ITaskRawData extends ITaskCreationalData {
-  id: number;
-  creationDate: string;
-  completed: boolean;
-}
-
-export interface ITaskCreationalData {
-  title: string;
-  desc: string;
-  proirity: TaskPriority;
-}
-
-export interface ISerializable<T> {
-  serialize(): T;
-}
-
-export interface IDeserializable<R, T> {
-  deserialize(rawData: R): T;
-}
-
-export interface IClonable<T> {
-  clone(): T;
-}
-
-export class TaskData implements ITaskData, IClonable<TaskData>, IDeserializable<ITaskRawData, TaskData> {
-
-  public id: number;
-  public creationDate: Date;
-  public completed: boolean;
-  public title: string;
-  public desc: string;
-  public proirity: TaskPriority;
-
-  constructor() {}
-
-  deserialize(rawData: ITaskRawData): TaskData {
-    this.id = rawData.id;
-    this.creationDate = new Date(rawData.creationDate);
-    this.completed = rawData.completed;
-    this.title = rawData.title;
-    this.desc = rawData.desc;
-    this.proirity = rawData.proirity;
-    return this;
-  }
-
-  clone(): TaskData {
-    const copy = new TaskData();
-    copy.id = this.id;
-    copy.creationDate = this.creationDate;
-    copy.completed = this.completed;
-    copy.title = this.title;
-    copy.desc = this.desc;
-    copy.proirity = this.proirity;
-    return copy;
-  }
-}
-
-type ClassDef<T> = new(...args: any[]) => T;
-
-/*export function deserialize<R, T>(classDef: ClassDef<T extends IDeserializable<R, T>>) {
-  return (source: Observable<R>) => {
-      return source.pipe(
-        map(rawData => rawData)
-      );
-  };
-}*/
+import { ServiceType } from '@core/enum';
 
 @Injectable()
 export class TaskService {

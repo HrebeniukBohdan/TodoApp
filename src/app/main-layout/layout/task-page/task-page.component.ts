@@ -1,12 +1,12 @@
-import { UtilsService } from './../../../shared/service/utils.service';
-import { CanComponentDeactivate } from '../../../core/guard/save-changes.guard';
-import { ITaskCreationalData, TaskData, TaskPriority } from './../../service/task.service';
+import { UtilsService } from '@shared/service/utils.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { TaskService } from '../../service/task.service';
+import { TaskService } from '@main-layout/service/task.service';
 import { tap, switchMap, mapTo } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import { CanComponentDeactivate } from '@core/model/save-changes-guard.model';
+import { TaskPriority, ITaskCreationalData, TaskData } from '@main-layout/model/tasks.model';
 
 interface PriorityConfig {
   name: string;
@@ -39,7 +39,7 @@ export class TaskPageComponent implements OnInit, CanComponentDeactivate {
     private router: Router,
     private utilsService: UtilsService) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.route.params.
     pipe(
       tap(params => {
@@ -56,16 +56,16 @@ export class TaskPageComponent implements OnInit, CanComponentDeactivate {
     ).subscribe(task => this.task = task);
   }
 
-  processTask(): void {
+  public processTask(): void {
     this.saveBtnPressed = true;
     this.taskProcessingObs$.subscribe(() => this.router.navigateByUrl('/'));
   }
 
-  goBack(): void {
+  public goBack(): void {
     this.router.navigateByUrl('/');
   }
 
-  canDeactivate(): Observable<boolean> | boolean {
+  public canDeactivate(): Observable<boolean> | boolean {
     if (this.form && !this.saveBtnPressed && this.form.valid && this.form.dirty)
     {
         return this.utilsService.showMessage(

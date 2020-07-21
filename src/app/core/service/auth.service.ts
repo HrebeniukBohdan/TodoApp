@@ -1,17 +1,9 @@
+import { SignInCredentials, SignInResponse } from '@core/model/auth.model';
 import { Observable, of } from 'rxjs';
 import { Injectable, Inject } from '@angular/core';
-import { API_SERVICE, IApiService } from 'src/app/shared/service/api.service';
+import { API_SERVICE, IApiService } from '@shared/service/api.service';
 import { tap } from 'rxjs/operators';
-import { ServiceType } from '../enum/enum';
-
-export interface SignInCredentials {
-  username: string;
-  password: string;
-}
-
-export interface SignInResponse {
-  token: string;
-}
+import { ServiceType } from '@core/enum';
 
 @Injectable()
 export class AuthService {

@@ -1,4 +1,4 @@
-import { MessageDialogComponent } from './../component/message-dialog/message-dialog.component';
+import { MessageDialogComponent } from '@shared/component/message-dialog/message-dialog.component';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,5 +20,9 @@ export class UtilsService {
     });
 
     return dialogRef.afterClosed();
+  }
+
+  public deepCopy(obj: any): any {
+    return JSON.parse(JSON.stringify(obj));
   }
 }

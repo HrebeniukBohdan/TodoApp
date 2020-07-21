@@ -1,13 +1,13 @@
-import { AuthService } from './../../../core/service/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { SignInCredentials } from 'src/app/core/service/auth.service';
+import { AuthService } from '@core/service/auth.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SignInCredentials } from '@core/model/auth.model';
 
 @Component({
   templateUrl: './sign-in-page.component.html',
   styleUrls: ['./sign-in-page.component.scss']
 })
-export class SignInPageComponent implements OnInit {
+export class SignInPageComponent {
 
   public params: SignInCredentials = { username: null, password: null };
   public hide: boolean = true;
@@ -15,13 +15,10 @@ export class SignInPageComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {
-  }
-
   public onSingInClick(): void {
     this.authService.signIn(this.params).subscribe(
       () => this.router.navigateByUrl('/'),
-      error => this.error = { message: 'Username or password is invalid' }
+      () => this.error = { message: 'Username or password is invalid' }
     );
   }
 

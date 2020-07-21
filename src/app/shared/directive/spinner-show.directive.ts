@@ -1,4 +1,4 @@
-import { SpinnerService } from '../service/spinner.service';
+import { SpinnerService } from '@shared/service/spinner.service';
 import { Directive, TemplateRef, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 

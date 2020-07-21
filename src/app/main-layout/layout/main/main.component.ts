@@ -1,7 +1,7 @@
-import { MenuRouteData } from './../../component/menu/menu.component';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { AuthService } from '@core/service/auth.service';
 import { Router } from '@angular/router';
+import { MenuRouteData } from '@main-layout/model/menu.model';
 
 @Component({
   templateUrl: './main.component.html',

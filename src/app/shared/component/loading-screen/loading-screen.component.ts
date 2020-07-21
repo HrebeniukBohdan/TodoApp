@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { trigger, transition, style, animate, stagger } from '@angular/animations';
+import { Component, Input } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-loading-screen',
@@ -14,14 +14,10 @@ import { trigger, transition, style, animate, stagger } from '@angular/animation
     ]),
   ]
 })
-export class LoadingScreenComponent implements OnInit {
+export class LoadingScreenComponent {
 
   @Input() fullScreen: boolean = false;
   @Input() showProgressBar: boolean = false;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

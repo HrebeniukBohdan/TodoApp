@@ -15,8 +15,10 @@ type RequestOptionsWithBody = RequestOptions & { body?: any };
 
 type HttpMethod = 'GET'|'POST'|'PATCH'|'PUT'|'DELETE';
 
-interface IApiConfig {
-  serviceEndpoints: { [remoteServiseName: string]: string };
+interface IApiConfig { [remoteServiseName: string]: string; }
+
+interface IApiConfigContainable {
+  serviceEndpoints: IApiConfig;
 }
 
 export interface IApiService<K extends string> {
@@ -32,7 +34,10 @@ export const API_SERVICE = new InjectionToken<IApiService<string>>('API.Service'
 
 @Injectable()
 export class ApiService implements IApiService<string> {
-  constructor(private httpClient: HttpClient, private appConfig: AppConfig, private spinner: SpinnerService) { }
+  constructor(
+    private appConfig: AppConfig,
+    private httpClient: HttpClient,
+    private spinner: SpinnerService) { }
 
   public request<T>(
     method: HttpMethod, serviceType: string, url: string, withSpinner: boolean = true, options?: RequestOptionsWithBody
@@ -82,11 +87,11 @@ export class ApiService implements IApiService<string> {
   }
 
   private prepareFullUrl(serviceType: string, url: string): string {
-    const services = this.appConfig.getConfig<IApiConfig>().serviceEndpoints;
-    if (!services) {
-      throw new Error(`There is no a config for the ApiService`);
+    const urlServiceMap = this.appConfig.getConfig<IApiConfigContainable>().serviceEndpoints;
+    if (!urlServiceMap) {
+      throw new Error(`There is no a config for ApiService`);
     }
-    const baseUrl = this.appConfig.getConfig<IApiConfig>().serviceEndpoints[serviceType];
+    const baseUrl = urlServiceMap[serviceType];
     if (!baseUrl) {
       throw new Error(`There is no such a remote service with the type "${serviceType}"`);
     }

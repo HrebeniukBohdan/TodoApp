@@ -1,3 +1,4 @@
+import { SettingsService } from './service/settings.service';
 import { TaskService } from './service/task.service';
 import { TasksPageComponent } from './layout/tasks-page/tasks-page.component';
 import { NgModule } from '@angular/core';
@@ -23,7 +24,7 @@ import { TaskItemComponent } from './component/task-item/task-item.component';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { SortCompletedPipe } from './pipe/sort-completed.pipe';
 
 @NgModule({
@@ -54,7 +55,8 @@ import { SortCompletedPipe } from './pipe/sort-completed.pipe';
     SharedModule
   ],
   providers: [
-    TaskService
+    TaskService,
+    SettingsService
   ]
 })
 export class MainModule { }

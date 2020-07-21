@@ -1,4 +1,4 @@
-import { ITaskData } from './../service/task.service';
+import { ITaskData } from '@main-layout/model/tasks.model';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({

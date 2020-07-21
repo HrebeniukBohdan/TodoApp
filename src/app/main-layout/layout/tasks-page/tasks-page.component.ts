@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
-import { TaskService, TaskData } from './../../service/task.service';
+import { TaskService } from '@main-layout/service/task.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ITaskData } from '../../service/task.service';
+import { ITaskData } from '@main-layout/model/tasks.model';
 
 @Component({
   templateUrl: './tasks-page.component.html',
@@ -15,7 +15,7 @@ export class TasksPageComponent implements OnInit {
 
   constructor(private tasksService: TaskService, private router: Router) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.tasks$ = this.tasksService.tasks$;
     this.fetch();
   }

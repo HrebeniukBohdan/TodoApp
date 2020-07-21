@@ -1,25 +1,9 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ServiceType } from './../../core/enum/enum';
+import { ISettings } from '@main-layout/model/settings.model';
+import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { ServiceType } from '@core/enum';
 import { Injectable, Inject } from '@angular/core';
-import { IApiService, API_SERVICE } from 'src/app/shared/service/api.service';
-
-export type ModeType = 'mode0'|'mode1'|'mode2'|'mode3';
-
-export interface IParams {
-  param0: boolean;
-  param1: boolean;
-  param2: boolean;
-  param3: boolean;
-  param4: boolean;
-  param5: boolean;
-}
-
-export interface ISettings {
-  name: string;
-  surname: string;
-  mode: ModeType;
-  params: IParams;
-}
+import { IApiService, API_SERVICE } from '@shared/service/api.service';
 
 @Injectable()
 export class SettingsService {
@@ -28,11 +12,24 @@ export class SettingsService {
 
   constructor(@Inject(API_SERVICE) private api: IApiService<ServiceType>) { }
 
-  public get tasks$(): Observable<ISettings|null> {
+  public get settings$(): Observable<ISettings|null> {
     return this.settingsSubject.asObservable();
   }
 
-  public get tasks(): ISettings|null {
+  public get settings(): ISettings|null {
     return this.settingsSubject.getValue();
+  }
+
+  public fetchSettings(): Observable<ISettings> {
+    return this.settings ? of(this.settings) :
+    this.api.get<ISettings>(ServiceType.PROFILE, 'settings').pipe(
+      tap(settings => this.settingsSubject.next(settings))
+    );
+  }
+
+  public changeSettings(newSettings: ISettings): Observable<ISettings> {
+    return this.api.patch<ISettings>(ServiceType.PROFILE, 'settings', newSettings).pipe(
+      tap(() => this.settingsSubject.next(newSettings))
+    );
   }
 }

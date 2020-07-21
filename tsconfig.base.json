@@ -16,9 +16,12 @@
       "dom"
     ],
     "paths": {
-      "@shared/*": ["app/shared/*"],
-      "@assets/*": ["app/assets/*"],
-      "@environments/*": ["environments/*"]
+      "@shared/*": ["src/app/shared/*"],
+      "@assets/*": ["src/app/assets/*"],
+      "@core/*": ["src/app/core/*"],
+      "@main-layout/*": ["src/app/main-layout/*"],
+      "@auth-layout/*": ["src/app/auth-layout/*"],
+      "@environments/*": ["src/environments/*"]
     }
   },
   "angularCompilerOptions": {

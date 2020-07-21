@@ -6,11 +6,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SignInPageComponent } from './layout/sign-in-page/sign-in-page.component';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [SignInPageComponent],
+  declarations: [
+    SignInPageComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

@@ -1,10 +1,5 @@
+import { MenuRouteData } from '@main-layout/model/menu.model';
 import { Component, Input } from '@angular/core';
-
-export interface MenuRouteData {
-  title: string;
-  icon: string;
-  routerLink: string;
-}
 
 @Component({
   selector: 'app-menu',

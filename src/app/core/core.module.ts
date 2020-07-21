@@ -4,7 +4,7 @@ import { NgModule, Inject, SkipSelf, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { AuthService } from './service/auth.service';
 
 @NgModule({

@@ -10,7 +10,33 @@ server.use(middlewares)
 // You can use the one used by JSON Server
 server.use(jsonServer.bodyParser)
 
-// Add custom routes before JSON Server router
+let settings = {
+  name: '',
+  surname: '',
+  mode: 'mode0',
+  params: {
+    param0: true,
+    param1: false,
+    param2: false,
+    param3: false,
+    param4: false,
+    param5: false
+  }
+}
+
+server.get('/settings', (req, res) => {
+  res.json(settings)
+})
+
+server.patch('/settings', (req, res) => {
+  if (req.body) {
+    settings = req.body;
+    res.json(settings)
+  } else {
+    res.sendStatus(400);
+  }
+})
+
 server.post('/login', (req, res) => {
   console.log(req);
   const { username, password } = req.body;
