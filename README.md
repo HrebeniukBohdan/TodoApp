@@ -1,6 +1,6 @@
 # TodoApp
 
-This project was developed to learn using of Angular state management approaches and demo such technologies like NgRx, NgXs and Akita.
+This project was developed to learn using of Angular state management approaches and demo NgRx technology.
 
 ## Run
 
