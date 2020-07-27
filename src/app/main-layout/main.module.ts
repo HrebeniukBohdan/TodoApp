@@ -1,3 +1,6 @@
+import { SettingsEffects } from './store/effects/settings.effects';
+import { mainFeatureKey, reducers } from './store/reducers/reducers';
+import { StoreModule } from '@ngrx/store';
 import { SettingsService } from './service/settings.service';
 import { TaskService } from './service/task.service';
 import { TasksPageComponent } from './layout/tasks-page/tasks-page.component';
@@ -26,6 +29,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SharedModule } from '@shared/shared.module';
 import { SortCompletedPipe } from './pipe/sort-completed.pipe';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,9 @@ import { SortCompletedPipe } from './pipe/sort-completed.pipe';
     MatInputModule,
     MatButtonToggleModule,
     MatRadioModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(mainFeatureKey, reducers),
+    EffectsModule.forFeature([SettingsEffects/*, TasksEffects*/])
   ],
   providers: [
     TaskService,

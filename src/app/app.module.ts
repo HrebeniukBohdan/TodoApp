@@ -21,9 +21,15 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserAnimationsModule,
     CoreModule,
     AuthLayoutModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production,
+        features: {
+        pause: false,
+        lock: true,
+        persist: true
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

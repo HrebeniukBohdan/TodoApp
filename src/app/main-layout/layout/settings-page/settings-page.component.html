@@ -1,33 +1,34 @@
-<form fxLayout="column" #formCtrl="ngForm" *ngIf="settings">
-  <div fxLayout="row wrap" fxLayoutGap.gt-xs="20px" fxFlex>
-    <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 20px)">
-      <mat-label>User name</mat-label>
-      <input matInput id="userName" name="userName" placeholder="Enter your name..." [(ngModel)]="settings.name">
-    </mat-form-field>
+<ng-container *ngIf="(state$|async) as state">
+  <form fxLayout="column" #formCtrl="ngForm" *ngIf="state.settings as settings">
+    <div fxLayout="row wrap" fxLayoutGap.gt-xs="20px" fxFlex>
+      <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 20px)">
+        <mat-label>User name</mat-label>
+        <input matInput id="name" name="name" placeholder="Enter your name..." [ngModel]="settings.name">
+      </mat-form-field>
 
-    <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 20px)">
-      <mat-label>User surname</mat-label>
-      <input matInput id="userSurname" name="userSurname" placeholder="Enter your surname..." [(ngModel)]="settings.surname">
-    </mat-form-field>
-  </div>
+      <mat-form-field fxFlex.xs="100%" fxFlex="calc(50% - 20px)">
+        <mat-label>User surname</mat-label>
+        <input matInput id="surname" name="surname" placeholder="Enter your surname..." [ngModel]="settings.surname">
+      </mat-form-field>
+    </div>
 
-  <mat-label class="label">Choose a mode:</mat-label>
-  <mat-radio-group id="radioGroup" name="radioGroup" class="group" [(ngModel)]="settings.mode" fxFlex="100%" fxLayout="row wrap">
-    <mat-radio-button *ngFor="let mode of modes" [attr.id]="mode.key" [name]="mode.key" [value]="mode.key" fxFlex.xs="50%" fxFlex.gt-xs class="item">
-      {{mode.name}}
-    </mat-radio-button>
-  </mat-radio-group>
+    <mat-label class="label">Choose a mode:</mat-label>
+    <mat-radio-group id="mode" name="mode" class="group" [ngModel]="settings.mode" fxFlex="100%" fxLayout="row wrap">
+      <mat-radio-button *ngFor="let mode of state.modes" [attr.id]="mode.key" [name]="mode.key" [value]="mode.key" fxFlex.xs="50%" fxFlex.gt-xs class="item">
+        {{mode.name}}
+      </mat-radio-button>
+    </mat-radio-group>
 
-  <mat-label class="label">Parameters:</mat-label>
-  <div class="group" fxFlex="100%" fxLayout="row wrap">
-    <mat-checkbox *ngFor="let param of parameters" [attr.id]="param.key" [name]="param.key"
-            fxFlex.xs="50%" fxFlex.gt-xs class="item" [(ngModel)]="settings.params[param.key]">{{param.name}}</mat-checkbox>
-  </div>
-  <div fxLayout="row nowrap" fxLayoutGap="10px">
-    <button mat-stroked-button color="primary"
-            fxFlex (click)="save()"
-            [disabled]="formCtrl.pristine || formCtrl.invalid"
-    >Save</button>
-    <button mat-stroked-button fxFlex (click)="goBack()">Cancel</button>
-  </div>
-</form>
+    <mat-label class="label">Parameters:</mat-label>
+    <div class="group" ngModelGroup="params" fxFlex="100%" fxLayout="row wrap">
+      <mat-checkbox *ngFor="let param of state.parameters" [attr.id]="param.key" [name]="param.key"
+              fxFlex.xs="50%" fxFlex.gt-xs class="item" [ngModel]="settings.params[param.key]">{{param.name}}</mat-checkbox>
+    </div>
+    <div fxLayout="row nowrap" fxLayoutGap="10px">
+      <button mat-stroked-button color="primary"
+              fxFlex (click)="save(formCtrl.value)"
+              [disabled]="formCtrl.pristine || formCtrl.invalid">Save</button>
+      <button mat-stroked-button fxFlex (click)="goBack()">Cancel</button>
+    </div>
+  </form>
+</ng-container>
