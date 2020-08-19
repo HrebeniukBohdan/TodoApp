@@ -1,8 +1,9 @@
-import { Router } from '@angular/router';
-import { TaskService } from '@main-layout/service/task.service';
+import { selectTasksState } from './../../store/selectors/tasks.selectors';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ITaskData } from '@main-layout/model/tasks.model';
+import { Store } from '@ngrx/store';
+import { LoadTasks, ChangeTaskStatus, GotoTaskPage } from '@main-layout/store/actions/tasks.actions';
 
 @Component({
   templateUrl: './tasks-page.component.html',
@@ -11,25 +12,20 @@ import { ITaskData } from '@main-layout/model/tasks.model';
 })
 export class TasksPageComponent implements OnInit {
 
-  public tasks$: Observable<ITaskData[]>;
+  public tasks$: Observable<ITaskData[]> = this.store.select(selectTasksState);
 
-  constructor(private tasksService: TaskService, private router: Router) { }
+  constructor(private readonly store: Store) { }
 
   public ngOnInit(): void {
-    this.tasks$ = this.tasksService.tasks$;
-    this.fetch();
+    this.store.dispatch(new LoadTasks());
   }
 
-  public fetch(): void {
-    this.tasksService.fetchTasks().subscribe();
+  public gotoTaskPage(taskId: string): void {
+    this.store.dispatch(new GotoTaskPage({ taskId }));
   }
 
-  public gotoEditScreen(task: ITaskData): void {
-    this.router.navigate(['one', task.id]);
-  }
-
-  public changeTaskStatus(task: ITaskData): void {
-    this.tasksService.changeTaskStatus(task).subscribe();
+  public changeTaskStatus(taskData: ITaskData): void {
+    this.store.dispatch(new ChangeTaskStatus({ taskData }));
   }
 
 }

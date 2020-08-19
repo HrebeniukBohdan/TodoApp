@@ -1,3 +1,5 @@
+import { AppSerializer } from '@core/router/serializer/app-router-store.serializer';
+import { fixRouterStoreCancel } from '@core/router/router.meta-reducer';
 import { SaveChangesGuard } from './guard/save-changes.guard';
 import { AuthGuard } from './guard/auth.guard';
 import { NgModule, Inject, SkipSelf, Optional } from '@angular/core';
@@ -6,12 +8,30 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { SharedModule } from '@shared/shared.module';
 import { AuthService } from './service/auth.service';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '@environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import {
+  StoreRouterConnectingModule,
+  routerReducer,
+  NavigationActionTiming,
+  RouterState
+} from '@ngrx/router-store';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    SharedModule.forRoot()
+    SharedModule.forRoot(),
+    StoreModule.forRoot({router: routerReducer}, { metaReducers: [fixRouterStoreCancel]}),
+    StoreRouterConnectingModule.forRoot({
+      navigationActionTiming: NavigationActionTiming.PostActivation,
+      serializer: AppSerializer,
+      routerState: RouterState.Full
+    }),
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
     {

@@ -8,7 +8,6 @@ export enum SettingsActionTypes {
   SaveSettings = '[Settings] Save Settings',
   SaveSettingsSuccess = '[Settings] Save Settings Success',
   SaveSettingsFailure = '[Settings] Save Settings Failure',
-  GoBackSettings = '[Settings] Go Back Settings',
 }
 
 export class LoadSettings implements Action {
@@ -40,15 +39,10 @@ export class SaveSettingsFailure implements Action {
   constructor(public payload: { error: any }) { }
 }
 
-export class GoBackSettings implements Action {
-  readonly type: SettingsActionTypes = SettingsActionTypes.GoBackSettings;
-}
-
 export type SettingsActions = LoadSettings |
                               LoadSettingsSuccess |
                               LoadSettingsFailure |
                               SaveSettings |
                               SaveSettingsSuccess |
-                              SaveSettingsFailure |
-                              GoBackSettings;
+                              SaveSettingsFailure;
 

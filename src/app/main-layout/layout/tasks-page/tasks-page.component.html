@@ -1,11 +1,11 @@
 <div style="height: 100%; overflow-y: auto;">
   <app-task-item
     *ngFor="let item of tasks$ | async | sortCompleted"
-    (editClick)="gotoEditScreen(item)"
+    (editClick)="gotoTaskPage(item.id)"
     (changeState)="changeTaskStatus($event)"
     [data] = "item"
   ></app-task-item>
 </div>
-<button mat-fab color="accent" class="add-btn" routerLink="one/new">
+<button mat-fab color="accent" class="add-btn" (click)="gotoTaskPage('new')">
   <mat-icon>add</mat-icon>
 </button>

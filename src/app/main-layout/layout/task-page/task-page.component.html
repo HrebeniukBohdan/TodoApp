@@ -1,27 +1,29 @@
-<form name="taskForm" #formCtrl="ngForm" class="task-form" fxLayout="column" *ngIf="task">
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="mb-15" [(ngModel)]="task.proirity">
-    <mat-button-toggle fxFlex [value]="priority.value" *ngFor="let priority of priorityConfs">
-      <span [class]="priority.value">{{ priority.name }}</span>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-  <mat-form-field fxFlex>
-    <mat-label>Title</mat-label>
-    <input matInput name="title" required [(ngModel)]="task.title">
-  </mat-form-field>
-  <mat-form-field fxFlex>
-    <mat-label>Description</mat-label>
-    <textarea
-      matInput
-      [(ngModel)]="task.desc"
-      name="description"
-      rows="8"
-      placeholder="Add here some description of the task"></textarea>
-  </mat-form-field>
-  <div fxLayout="row nowrap" fxLayoutGap="10px">
-    <button mat-stroked-button color="primary"
-            fxFlex (click)="processTask()"
-            [disabled]="formCtrl.pristine || formCtrl.invalid"
-    >{{ editMode ? 'Edit' : 'Add'}}</button>
-    <button mat-stroked-button fxFlex (click)="goBack()">Cancel</button>
-  </div>
-</form>
+<ng-container *ngIf="state$ | async as state">
+  <form name="taskForm" #formCtrl="ngForm" class="task-form" fxLayout="column" *ngIf="state.task">
+    <mat-button-toggle-group name="proirity" aria-label="Font Style" class="mb-15" [ngModel]="state.task.proirity">
+      <mat-button-toggle fxFlex [value]="priority.value" *ngFor="let priority of state.priorityConfigs">
+        <span [class]="priority.value">{{ priority.name }}</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-form-field fxFlex>
+      <mat-label>Title</mat-label>
+      <input matInput name="title" required [ngModel]="state.task.title">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        [ngModel]="state.task.desc"
+        name="desc"
+        rows="8"
+        placeholder="Add here some description of the task"></textarea>
+    </mat-form-field>
+    <div fxLayout="row nowrap" fxLayoutGap="10px">
+      <button mat-stroked-button color="primary"
+              fxFlex (click)="processTask(state, formCtrl.value)"
+              [disabled]="formCtrl.pristine || formCtrl.invalid"
+      >{{ state.editMode ? 'Edit' : 'Add'}}</button>
+      <button mat-stroked-button fxFlex (click)="goBack()">Cancel</button>
+    </div>
+  </form>
+</ng-container>

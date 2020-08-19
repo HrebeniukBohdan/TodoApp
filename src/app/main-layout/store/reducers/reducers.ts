@@ -1,14 +1,14 @@
 import * as fromSettings from './settings.reducer';
 import * as fromTasks from './tasks.reducer';
 
-export const mainFeatureKey = 'main';
+export const mainFeatureKey = 'mainFeature';
 
 export interface MainLayoutState {
-  settings: fromSettings.SettingsState;
-  tasks: fromTasks.TasksState;
+  [fromSettings.settingsFeatureKey]: fromSettings.SettingsState;
+  [fromTasks.tasksFeatureKey]: fromTasks.TasksState;
 }
 
 export const reducers = {
-  settings: fromSettings.reducer,
-  tasks: fromTasks.reducer
+  [fromSettings.settingsFeatureKey]: fromSettings.reducer,
+  [fromTasks.tasksFeatureKey]: fromTasks.reducer
 };

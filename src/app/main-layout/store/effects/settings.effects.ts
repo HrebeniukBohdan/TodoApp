@@ -1,5 +1,5 @@
+import { GoBack } from './../actions/main.actions';
 import { SaveSettings } from './../actions/settings.actions';
-import { Router } from '@angular/router';
 import { SettingsService } from '@main-layout/service/settings.service';
 import {
   SettingsActionTypes,
@@ -8,7 +8,7 @@ import {
   SaveSettingsSuccess,
   SaveSettingsFailure
 } from '@main-layout/store/actions/settings.actions';
-import { map, catchError, switchMap, first, tap } from 'rxjs/operators';
+import { map, catchError, switchMap, first } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of, Observable } from 'rxjs';
@@ -27,25 +27,20 @@ export class SettingsEffects {
   );
 
   @Effect()
-  saveSettings$: Observable<SaveSettingsSuccess | SaveSettingsFailure> = this.actions$.pipe(
+  saveSettings$: Observable<SaveSettingsSuccess | GoBack | SaveSettingsFailure> = this.actions$.pipe(
     ofType(SettingsActionTypes.SaveSettings),
     switchMap(({ payload }: SaveSettings) => this.settingsApi.changeSettings(payload.changedSettings).pipe(
-      map(updatedSettings => new SaveSettingsSuccess({ updatedSettings })),
-      tap(() => this.router.navigateByUrl('/')),
+      switchMap(updatedSettings => [
+        new GoBack(),
+        new SaveSettingsSuccess({ updatedSettings })
+      ]),
       catchError(error => of(new SaveSettingsFailure({ error }))))
     )
   );
 
-  @Effect()
-  goBackSettings$: Observable<never>  = this.actions$.pipe(
-    ofType(SettingsActionTypes.GoBackSettings),
-    tap(() => this.router.navigateByUrl('/'))
-  );
-
   constructor(
     private actions$: Actions,
-    private settingsApi: SettingsService,
-    private router: Router
+    private settingsApi: SettingsService
   ) {}
 
 }

@@ -5,7 +5,7 @@ import { Action } from '@ngrx/store';
 import { ISettings } from '@main-layout/model/settings.model';
 import { IDisplayParameter } from '@main-layout/model/common.model';
 
-export const settingsFeatureKey = 'settings';
+export const settingsFeatureKey = 'settingsSubFeature';
 
 export interface SettingsState {
   modes: IDisplayParameter[];

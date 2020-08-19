@@ -62,3 +62,26 @@ export class TaskData implements ITaskData, IClonable<TaskData>, IDeserializable
     return copy;
   }
 }
+
+export interface PriorityConfig {
+  name: string;
+  value: TaskPriority;
+}
+
+export const PRIORITY_CONFIGS: PriorityConfig[] = [
+  { name: 'Low', value: 'low' },
+  { name: 'Medium', value: 'medium' },
+  { name: 'High', value: 'high' },
+];
+
+export const INITIAL_TASK_DATA: ITaskCreationalData = {
+  title: '',
+  desc: '',
+  proirity: 'low'
+};
+
+export interface ITaskState {
+  editMode: boolean;
+  task: ITaskCreationalData|TaskData;
+  priorityConfigs: PriorityConfig[];
+}

@@ -1,3 +1,5 @@
+import { MainEffects } from './store/effects/main.effects';
+import { TasksEffects } from './store/effects/tasks.effects';
 import { SettingsEffects } from './store/effects/settings.effects';
 import { mainFeatureKey, reducers } from './store/reducers/reducers';
 import { StoreModule } from '@ngrx/store';
@@ -58,7 +60,7 @@ import { EffectsModule } from '@ngrx/effects';
     MatRadioModule,
     SharedModule,
     StoreModule.forFeature(mainFeatureKey, reducers),
-    EffectsModule.forFeature([SettingsEffects/*, TasksEffects*/])
+    EffectsModule.forFeature([SettingsEffects, TasksEffects, MainEffects])
   ],
   providers: [
     TaskService,

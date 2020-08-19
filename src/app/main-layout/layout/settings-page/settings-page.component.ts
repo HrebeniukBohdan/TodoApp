@@ -1,4 +1,5 @@
-import { SaveSettings, GoBackSettings } from './../../store/actions/settings.actions';
+import { GoBack } from './../../store/actions/main.actions';
+import { SaveSettings } from './../../store/actions/settings.actions';
 import { ISettings } from '@main-layout/model/settings.model';
 import { SettingsState } from './../../store/reducers/settings.reducer';
 import { Observable } from 'rxjs';
@@ -27,6 +28,6 @@ export class SettingsPageComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.store.dispatch(new GoBackSettings());
+    this.store.dispatch(new GoBack());
   }
 }

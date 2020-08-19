@@ -1,17 +1,16 @@
+import { EditTask } from './../../store/actions/tasks.actions';
+import { GoBack } from './../../store/actions/main.actions';
+import { ITaskState, ITaskCreationalData, ITaskData } from './../../model/tasks.model';
+import { selectTaskStateOperator } from './../../store/selectors/task.selectors';
 import { UtilsService } from '@shared/service/utils.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, Params } from '@angular/router';
-import { TaskService } from '@main-layout/service/task.service';
-import { tap, switchMap, mapTo } from 'rxjs/operators';
+import { switchMap, mapTo, tap, map, delay } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { CanComponentDeactivate } from '@core/model/save-changes-guard.model';
-import { TaskPriority, ITaskCreationalData, TaskData } from '@main-layout/model/tasks.model';
-
-interface PriorityConfig {
-  name: string;
-  value: TaskPriority;
-}
+import { TaskData } from '@main-layout/model/tasks.model';
+import { Store } from '@ngrx/store';
+import { LoadTasks, AddTask } from '@main-layout/store/actions/tasks.actions';
 
 @Component({
   templateUrl: './task-page.component.html',
@@ -19,71 +18,50 @@ interface PriorityConfig {
 })
 export class TaskPageComponent implements OnInit, CanComponentDeactivate {
 
-  public readonly priorityConfs: PriorityConfig[] = [
-    { name: 'Low', value: 'low' },
-    { name: 'Medium', value: 'medium' },
-    { name: 'High', value: 'high' },
-  ];
-  public params: Params;
-  public task: ITaskCreationalData|TaskData|null;
-  public editMode: boolean = true;
+  public state$: Observable<ITaskState> = this.store.pipe(
+    selectTaskStateOperator,
+    tap(state => this.state = state)
+  );
 
   @ViewChild('formCtrl') form: NgForm;
 
-  private taskId: number;
+  private state: ITaskState;
   private saveBtnPressed: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private tasksService: TaskService,
-    private router: Router,
-    private utilsService: UtilsService) { }
+  constructor(private readonly store: Store, private utilsService: UtilsService) { }
 
   public ngOnInit(): void {
-    this.route.params.
-    pipe(
-      tap(params => {
-        this.params = params;
-        const id: string = params.id;
-        if (id === 'new') {
-          this.editMode = false;
-        } else {
-          this.taskId = parseInt(id, 10);
-        }
-      }),
-      switchMap(() => this.editMode ?
-                          this.tasksService.getTask(this.taskId) : this.tasksService.getNewTaskData())
-    ).subscribe(task => this.task = task);
+    this.store.dispatch(new LoadTasks());
   }
 
-  public processTask(): void {
+  public processTask(state: ITaskState, taskData: ITaskCreationalData = this.form.value): void {
     this.saveBtnPressed = true;
-    this.taskProcessingObs$.subscribe(() => this.router.navigateByUrl('/'));
+
+    this.store.dispatch(
+      state.editMode ?
+      new EditTask({ taskData: {...state.task as ITaskData, ...taskData} })
+      :
+      new AddTask({ taskData })
+    );
   }
 
   public goBack(): void {
-    this.router.navigateByUrl('/');
+    this.store.dispatch(new GoBack());
   }
 
   public canDeactivate(): Observable<boolean> | boolean {
     if (this.form && !this.saveBtnPressed && this.form.valid && this.form.dirty)
     {
-        return this.utilsService.showMessage(
+        this.utilsService.showMessage(
           false, 'Warning', [
             'The form contains some changes.',
             'Would you like to save the proggress?'
           ], true
         ).pipe(
-          switchMap(save => save ? this.taskProcessingObs$ : of(true)),
-          mapTo(true)
+          tap(save => save ? this.processTask(this.state) : true)
         );
     }
     return true;
-  }
-
-  private get taskProcessingObs$(): Observable<TaskData> {
-    return this.editMode ?
-      this.tasksService.editTask(this.task as TaskData) : this.tasksService.addNewTask(this.task);
   }
 
 }
