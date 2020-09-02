@@ -1,5 +1,4 @@
 import { AppSerializer } from '@core/router/serializer/app-router-store.serializer';
-import { fixRouterStoreCancel } from '@core/router/router.meta-reducer';
 import { SaveChangesGuard } from './guard/save-changes.guard';
 import { AuthGuard } from './guard/auth.guard';
 import { NgModule, Inject, SkipSelf, Optional } from '@angular/core';
@@ -24,14 +23,14 @@ import {
   imports: [
     CommonModule,
     SharedModule.forRoot(),
-    StoreModule.forRoot({router: routerReducer}, { metaReducers: [fixRouterStoreCancel]}),
+    StoreModule.forRoot({router: routerReducer}),
     StoreRouterConnectingModule.forRoot({
       navigationActionTiming: NavigationActionTiming.PostActivation,
       serializer: AppSerializer,
       routerState: RouterState.Full
     }),
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    environment.production ? [] : StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
     {

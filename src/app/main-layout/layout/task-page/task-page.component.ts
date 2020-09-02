@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 import { Observable, of, forkJoin } from 'rxjs';
 import { CanComponentDeactivate } from '@core/model/save-changes-guard.model';
 import { TaskData } from '@main-layout/model/tasks.model';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { LoadTasks, AddTask } from '@main-layout/store/actions/tasks.actions';
 
 @Component({
@@ -18,14 +18,10 @@ import { LoadTasks, AddTask } from '@main-layout/store/actions/tasks.actions';
 })
 export class TaskPageComponent implements OnInit, CanComponentDeactivate {
 
-  public state$: Observable<ITaskState> = this.store.pipe(
-    selectTaskStateOperator,
-    tap(state => this.state = state)
-  );
+  public state$: Observable<ITaskState> = this.store.select(selectTaskStateOperator);
 
   @ViewChild('formCtrl') form: NgForm;
 
-  private state: ITaskState;
   private saveBtnPressed: boolean = false;
 
   constructor(private readonly store: Store, private utilsService: UtilsService) { }
@@ -52,15 +48,20 @@ export class TaskPageComponent implements OnInit, CanComponentDeactivate {
   public canDeactivate(): Observable<boolean> | boolean {
     if (this.form && !this.saveBtnPressed && this.form.valid && this.form.dirty)
     {
-        this.utilsService.showMessage(
-          false, 'Warning', [
-            'The form contains some changes.',
-            'Would you like to save the proggress?'
-          ], true
-        ).pipe(
-          tap(save => save ? this.processTask(this.state) : true)
-        );
+      const showPopup$ = this.utilsService.showMessage(
+        false, 'Warning', [
+          'The form contains some changes.',
+          'Would you like to save the proggress?'
+        ], true
+      );
+
+      return this.state$.pipe(
+        switchMap(state => forkJoin([of(state), showPopup$])),
+        tap(([state, save]) => save ? this.processTask(state) : true),
+        mapTo(true)
+      );
     }
+
     return true;
   }
 

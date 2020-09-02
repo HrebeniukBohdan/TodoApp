@@ -1,25 +1,25 @@
-<div class="sign-in-page" fxLayout="column" fxLayoutAlign="center">
+<div class="sign-in-page" fxLayout="column" fxLayoutAlign="center" *ngIf="state$ |async as state">
   <div fxLayout="row" fxLayoutAlign="center">
-    <form name="signInForm" class="sign-in-form" fxLayout="column" fxFlex.gt-xs="420px">
+    <form name="signInForm" class="sign-in-form" fxLayout="column" fxFlex.gt-xs="420px" #form="ngForm">
       <span class="title">Sign In</span>
       <span class="instruction">Enter your credentials below to continue:</span>
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Username</mat-label>
         <mat-icon matPrefix>face</mat-icon>
-        <input matInput name="username" [(ngModel)]="params.username">
+        <input matInput name="username" [ngModel]="state.credentials.username">
       </mat-form-field>
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Password</mat-label>
         <mat-icon matPrefix>lock</mat-icon>
-        <input matInput name="password" [type]="hide ? 'password' : 'text'" [(ngModel)]="params.password">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <input matInput name="password" [type]="state.isPasswordVisible ? 'text' : 'password'" [ngModel]="state.credentials.password">
+        <button mat-icon-button matSuffix (click)="onPasswordVisibilityClick()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="!state.isPasswordVisible">
+          <mat-icon>{{state.isPasswordVisible ? 'visibility' : 'visibility_off'}}</mat-icon>
         </button>
       </mat-form-field>
       <div fxLayout="column" fxLayoutGap="15px">
-        <app-message-box *ngIf="error" (closeClick)="onMessageBoxClose()">{{error.message}}</app-message-box>
+        <app-message-box *ngIf="state.error" (closeClick)="onMessageBoxClose()">{{state.error.message}}</app-message-box>
         <div fxLayout="row nowrap" fxLayoutGap="10px">
-          <button mat-stroked-button color="primary" fxFlex (click)="onSingInClick()">Sign In</button>
+          <button mat-stroked-button color="primary" fxFlex (click)="onSingInSubmit(form.value)">Sign In</button>
         </div>
       </div>
     </form>

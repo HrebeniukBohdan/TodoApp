@@ -6,6 +6,11 @@ This project was developed to learn using of Angular state management approaches
 
 In order to run the project please execute `npm start` and `npm run launch-server` to run a stub server.
 
+Sign in credentials for the stub:
+
+* username: "user"
+* password: "password"
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.

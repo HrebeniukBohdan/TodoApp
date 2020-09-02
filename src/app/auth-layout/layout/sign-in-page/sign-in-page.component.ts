@@ -1,7 +1,10 @@
-import { AuthService } from '@core/service/auth.service';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { SignInCredentials } from '@core/model/auth.model';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AuthState } from '@auth-layout/store/reducers';
+import { SignIn, SignInEraseError, SwitchPasswordVisibility } from '@auth-layout/store/actions';
+import { selectAuthState } from '@auth-layout/store/selectors';
 
 @Component({
   templateUrl: './sign-in-page.component.html',
@@ -9,21 +12,20 @@ import { SignInCredentials } from '@core/model/auth.model';
 })
 export class SignInPageComponent {
 
-  public params: SignInCredentials = { username: null, password: null };
-  public hide: boolean = true;
-  public error: { message: string };
+  public state$: Observable<AuthState> = this.store.select(selectAuthState);
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private readonly store: Store) { }
 
-  public onSingInClick(): void {
-    this.authService.signIn(this.params).subscribe(
-      () => this.router.navigateByUrl('/'),
-      () => this.error = { message: 'Username or password is invalid' }
-    );
+  public onSingInSubmit(credentials: SignInCredentials): void {
+    this.store.dispatch(new SignIn({ credentials }));
+  }
+
+  public onPasswordVisibilityClick(): void {
+    this.store.dispatch(new SwitchPasswordVisibility());
   }
 
   public onMessageBoxClose(): void {
-    this.error = null;
+    this.store.dispatch(new SignInEraseError());
   }
 
 }
