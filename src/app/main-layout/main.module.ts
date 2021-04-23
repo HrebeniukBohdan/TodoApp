@@ -1,8 +1,14 @@
+import { TasksState } from './store/states/tasks.state';
+import { MainState } from './store/states/main.state';
+import { SettingsState } from './store/states/settings.state';
+import { NgxsModule } from '@ngxs/store';
+/*
 import { MainEffects } from './store/effects/main.effects';
 import { TasksEffects } from './store/effects/tasks.effects';
 import { SettingsEffects } from './store/effects/settings.effects';
 import { mainFeatureKey, reducers } from './store/reducers/reducers';
 import { StoreModule } from '@ngrx/store';
+*/
 import { SettingsService } from './service/settings.service';
 import { TaskService } from './service/task.service';
 import { TasksPageComponent } from './layout/tasks-page/tasks-page.component';
@@ -31,7 +37,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SharedModule } from '@shared/shared.module';
 import { SortCompletedPipe } from './pipe/sort-completed.pipe';
-import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -59,8 +64,9 @@ import { EffectsModule } from '@ngrx/effects';
     MatButtonToggleModule,
     MatRadioModule,
     SharedModule,
-    StoreModule.forFeature(mainFeatureKey, reducers),
-    EffectsModule.forFeature([SettingsEffects, TasksEffects, MainEffects])
+    // StoreModule.forFeature(mainFeatureKey, reducers),
+    // EffectsModule.forFeature([SettingsEffects, TasksEffects, MainEffects]),
+    NgxsModule.forFeature([MainState, TasksState, SettingsState])
   ],
   providers: [
     TaskService,

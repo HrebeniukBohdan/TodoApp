@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { SignInCredentials } from '@core/model/auth.model';
-import { Store } from '@ngrx/store';
+import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { AuthState } from '@auth-layout/store/reducers';
-import { SignIn, SignInEraseError, SwitchPasswordVisibility } from '@auth-layout/store/actions';
-import { selectAuthState } from '@auth-layout/store/selectors';
+import { AuthState, AuthStateModel } from '@auth-layout/store/states';
+import { AuthActions } from '@auth-layout/store/actions';
+import { Select } from '@ngxs/store';
 
 @Component({
   templateUrl: './sign-in-page.component.html',
@@ -12,20 +12,20 @@ import { selectAuthState } from '@auth-layout/store/selectors';
 })
 export class SignInPageComponent {
 
-  public state$: Observable<AuthState> = this.store.select(selectAuthState);
+  @Select(AuthState) state$: Observable<AuthStateModel>;
 
   constructor(private readonly store: Store) { }
 
   public onSingInSubmit(credentials: SignInCredentials): void {
-    this.store.dispatch(new SignIn({ credentials }));
+    this.store.dispatch(new AuthActions.SignIn({ credentials }));
   }
 
   public onPasswordVisibilityClick(): void {
-    this.store.dispatch(new SwitchPasswordVisibility());
+    this.store.dispatch(new AuthActions.SwitchPasswordVisibility());
   }
 
   public onMessageBoxClose(): void {
-    this.store.dispatch(new SignInEraseError());
+    this.store.dispatch(new AuthActions.SignInEraseError());
   }
 
 }

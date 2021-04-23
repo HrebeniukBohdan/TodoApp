@@ -1,75 +1,48 @@
-import { ITaskCreationalData } from './../../model/tasks.model';
-import { Action } from '@ngrx/store';
-import { ITaskRawData, ITaskData } from '@main-layout/model/tasks.model';
+import { ITaskCreationalData, ITaskState } from '@main-layout/model/tasks.model';
+import { ITaskData } from '@main-layout/model/tasks.model';
 
 export enum TasksActionTypes {
-  LoadTasks = '[Tasks] Load Tasks',
-  LoadTasksSuccess = '[Tasks] Load Tasks Success',
-  CommonRequestTasksFailure = '[Tasks] Common Request Tasks Failure',
-  AddTask = '[Tasks] Add Task',
-  AddTaskSuccess = '[Tasks] Add Task Success',
-  EditTask = '[Tasks] Edit Task',
-  EditTaskSuccess = '[Tasks] Edit Task Success',
-  ChangeTaskStatus = '[Tasks] Change Task Status',
-  ChangeTaskStatusSuccess = '[Tasks] Change Task Status Success',
-  GotoTaskPage = '[Tasks] Goto Task Page'
+  Load = '[Tasks] Load Tasks',
+  CommonFailure = '[Tasks] Common Request Tasks Failure',
+  Add = '[Tasks] Add Task',
+  Edit = '[Tasks] Edit Task',
+  GotoTaskPage = '[Tasks] Go To Task Page',
+  SaveOnDeactivate = '[Tasks] Save On Deactivate',
+  ChangeStatus = '[Tasks] Change Task Status'
 }
 
-export class LoadTasks implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.LoadTasks;
-}
+export namespace TasksActions {
+  export class Load {
+    static readonly type: TasksActionTypes = TasksActionTypes.Load;
+  }
 
-export class LoadTasksSuccess implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.LoadTasksSuccess;
-  constructor(public payload: { tasksRawData: ITaskRawData[] }) { }
-}
+  export class ChangeStatus {
+    static readonly type: TasksActionTypes = TasksActionTypes.ChangeStatus;
+    constructor(public payload: { taskData: ITaskData }) { }
+  }
 
-export class CommonRequestTasksFailure implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.CommonRequestTasksFailure;
-  constructor(public payload: { error: any }) { }
-}
+  export class Edit {
+    static readonly type: TasksActionTypes = TasksActionTypes.Edit;
+    constructor(public payload: { taskData: ITaskData }) { }
+  }
 
-export class ChangeTaskStatus implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.ChangeTaskStatus;
-  constructor(public payload: { taskData: ITaskData }) { }
-}
+  export class Add {
+    static readonly type: TasksActionTypes = TasksActionTypes.Add;
+    constructor(public payload: { taskData: ITaskCreationalData }) { }
+  }
 
-export class ChangeTaskStatusSuccess implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.ChangeTaskStatusSuccess;
-  constructor(public payload: { taskRawData: ITaskRawData }) { }
-}
+  export class GotoTaskPage {
+    static readonly type: TasksActionTypes = TasksActionTypes.GotoTaskPage;
+    constructor(public payload: { taskId: string }) { }
+  }
 
-export class EditTask implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.EditTask;
-  constructor(public payload: { taskData: ITaskData }) { }
-}
+  export class SaveOnDeactivate {
+    static readonly type: TasksActionTypes = TasksActionTypes.SaveOnDeactivate;
+    constructor(public payload: { activeTaskState: ITaskState, taskData: ITaskCreationalData|ITaskData }) { }
+  }
 
-export class EditTaskSuccess implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.EditTaskSuccess;
-  constructor(public payload: { taskRawData: ITaskRawData }) { }
+  export class CommonFailure {
+    static readonly type: TasksActionTypes = TasksActionTypes.CommonFailure;
+    constructor(public payload: { error: any }) { }
+  }
 }
-
-export class AddTask implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.AddTask;
-  constructor(public payload: { taskData: ITaskCreationalData }) { }
-}
-
-export class AddTaskSuccess implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.AddTaskSuccess;
-  constructor(public payload: { taskRawData: ITaskRawData }) { }
-}
-
-export class GotoTaskPage implements Action {
-  readonly type: TasksActionTypes = TasksActionTypes.GotoTaskPage;
-  constructor(public payload: { taskId: string }) { }
-}
-
-export type TasksActions =  LoadTasks |
-                            LoadTasksSuccess |
-                            ChangeTaskStatus |
-                            ChangeTaskStatusSuccess |
-                            AddTask |
-                            AddTaskSuccess |
-                            EditTask |
-                            EditTaskSuccess |
-                            CommonRequestTasksFailure;

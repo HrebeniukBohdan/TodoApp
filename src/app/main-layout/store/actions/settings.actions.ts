@@ -1,48 +1,23 @@
-import { Action } from '@ngrx/store';
 import { ISettings } from '@main-layout/model/settings.model';
 
 export enum SettingsActionTypes {
-  LoadSettings = '[Settings] Load Settings',
-  LoadSettingsSuccess = '[Settings] Load Settings Success',
-  LoadSettingsFailure = '[Settings] Load Settings Failure',
-  SaveSettings = '[Settings] Save Settings',
-  SaveSettingsSuccess = '[Settings] Save Settings Success',
-  SaveSettingsFailure = '[Settings] Save Settings Failure',
+  Load = '[Settings] Load Settings',
+  Save = '[Settings] Save Settings',
+  Failure = '[Settings] Settings Failure'
 }
 
-export class LoadSettings implements Action {
-  readonly type: SettingsActionTypes = SettingsActionTypes.LoadSettings;
+export namespace SettingsActions {
+  export class Load {
+    static readonly type: SettingsActionTypes = SettingsActionTypes.Load;
+  }
+
+  export class Save {
+    static readonly type: SettingsActionTypes = SettingsActionTypes.Save;
+    constructor(public payload: { changedSettings: ISettings }) { }
+  }
+
+  export class Failure {
+    static readonly type: SettingsActionTypes = SettingsActionTypes.Failure;
+    constructor(public payload: { error: any }) { }
+  }
 }
-
-export class LoadSettingsSuccess implements Action {
-  readonly type: SettingsActionTypes = SettingsActionTypes.LoadSettingsSuccess;
-  constructor(public payload: { settings: ISettings }) { }
-}
-
-export class LoadSettingsFailure implements Action {
-  readonly type: SettingsActionTypes = SettingsActionTypes.LoadSettingsFailure;
-  constructor(public payload: { error: any }) { }
-}
-
-export class SaveSettings implements Action {
-  readonly type: SettingsActionTypes = SettingsActionTypes.SaveSettings;
-  constructor(public payload: { changedSettings: ISettings }) { }
-}
-
-export class SaveSettingsSuccess implements Action {
-  readonly type: SettingsActionTypes = SettingsActionTypes.SaveSettingsSuccess;
-  constructor(public payload: { updatedSettings: ISettings }) { }
-}
-
-export class SaveSettingsFailure implements Action {
-  readonly type: SettingsActionTypes = SettingsActionTypes.SaveSettingsFailure;
-  constructor(public payload: { error: any }) { }
-}
-
-export type SettingsActions = LoadSettings |
-                              LoadSettingsSuccess |
-                              LoadSettingsFailure |
-                              SaveSettings |
-                              SaveSettingsSuccess |
-                              SaveSettingsFailure;
-

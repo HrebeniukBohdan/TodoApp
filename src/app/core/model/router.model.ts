@@ -1,11 +1,11 @@
 import { Params, Data } from '@angular/router';
 
-export interface RouterState {
-  state: ActiveRouteState;
+export interface RouterStateModel {
+  state: ActiveRouteStateModel;
   navigationId: number;
 }
 
-export interface ActiveRouteState {
+export interface ActiveRouteStateModel {
   url: string;
   params: Params;
   queryParams: Params;

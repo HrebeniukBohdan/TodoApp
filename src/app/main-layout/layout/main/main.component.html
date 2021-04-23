@@ -11,7 +11,7 @@
 </mat-toolbar>
 <mat-drawer-container class="sidenav-menu">
   <mat-drawer class="menu" #drawer [mode]="'over'">
-    <app-menu [menuItems]="menuItems"></app-menu>
+    <app-menu [menuItems]="state$|async"></app-menu>
   </mat-drawer>
   <mat-drawer-content>
     <div class="viewport">

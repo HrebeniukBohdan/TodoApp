@@ -1,16 +1,14 @@
-import { EditTask } from './../../store/actions/tasks.actions';
-import { GoBack } from './../../store/actions/main.actions';
-import { ITaskState, ITaskCreationalData, ITaskData } from './../../model/tasks.model';
-import { selectTaskStateOperator } from './../../store/selectors/task.selectors';
+import { Navigate } from '@ngxs/router-plugin';
+import { ITaskState, ITaskCreationalData, ITaskData } from '@main-layout/model/tasks.model';
 import { UtilsService } from '@shared/service/utils.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { switchMap, mapTo, tap, map, delay } from 'rxjs/operators';
+import { switchMap, mapTo } from 'rxjs/operators';
 import { NgForm } from '@angular/forms';
-import { Observable, of, forkJoin } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CanComponentDeactivate } from '@core/model/save-changes-guard.model';
-import { TaskData } from '@main-layout/model/tasks.model';
-import { Store, select } from '@ngrx/store';
-import { LoadTasks, AddTask } from '@main-layout/store/actions/tasks.actions';
+import { Store } from '@ngxs/store';
+import { TasksState } from '@main-layout/store/states/tasks.state';
+import { TasksActions } from '@main-layout/store/actions/tasks.actions';
 
 @Component({
   templateUrl: './task-page.component.html',
@@ -18,7 +16,8 @@ import { LoadTasks, AddTask } from '@main-layout/store/actions/tasks.actions';
 })
 export class TaskPageComponent implements OnInit, CanComponentDeactivate {
 
-  public state$: Observable<ITaskState> = this.store.select(selectTaskStateOperator);
+  // @Select(TasksState.selectActiveTaskData)
+  public state$: Observable<ITaskState> = this.store.selectOnce(TasksState.selectActiveTaskData);
 
   @ViewChild('formCtrl') form: NgForm;
 
@@ -27,28 +26,28 @@ export class TaskPageComponent implements OnInit, CanComponentDeactivate {
   constructor(private readonly store: Store, private utilsService: UtilsService) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(new LoadTasks());
+    this.store.dispatch(new TasksActions.Load());
   }
 
-  public processTask(state: ITaskState, taskData: ITaskCreationalData = this.form.value): void {
+  public processTask(state: ITaskState, taskData: ITaskCreationalData = this.form.value): Observable<void> {
     this.saveBtnPressed = true;
 
-    this.store.dispatch(
+    return this.store.dispatch(
       state.editMode ?
-      new EditTask({ taskData: {...state.task as ITaskData, ...taskData} })
+      new TasksActions.Edit({ taskData: {...state.task as ITaskData, ...taskData} })
       :
-      new AddTask({ taskData })
+      new TasksActions.Add({ taskData })
     );
   }
 
   public goBack(): void {
-    this.store.dispatch(new GoBack());
+    this.store.dispatch(new Navigate(['/']));
   }
 
   public canDeactivate(): Observable<boolean> | boolean {
     if (this.form && !this.saveBtnPressed && this.form.valid && this.form.dirty)
     {
-      const showPopup$ = this.utilsService.showMessage(
+      /*const showPopup$ = this.utilsService.showMessage(
         false, 'Warning', [
           'The form contains some changes.',
           'Would you like to save the proggress?'
@@ -57,7 +56,15 @@ export class TaskPageComponent implements OnInit, CanComponentDeactivate {
 
       return this.state$.pipe(
         switchMap(state => forkJoin([of(state), showPopup$])),
-        tap(([state, save]) => save ? this.processTask(state) : true),
+        switchMap(([state, save]) => save ? this.processTask(state) : of(true)),
+        mapTo(true)
+      );
+      */
+      return this.state$.pipe(
+        switchMap(
+          activeTaskState =>
+              this.store.dispatch(new TasksActions.SaveOnDeactivate({ activeTaskState, taskData: this.form.value }))
+        ),
         mapTo(true)
       );
     }

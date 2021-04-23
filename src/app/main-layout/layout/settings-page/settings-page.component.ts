@@ -1,12 +1,10 @@
-import { GoBack } from './../../store/actions/main.actions';
-import { SaveSettings } from './../../store/actions/settings.actions';
+import { SettingsState, SettingsStateModel } from '@main-layout/store/states/settings.state';
 import { ISettings } from '@main-layout/model/settings.model';
-import { SettingsState } from './../../store/reducers/settings.reducer';
 import { Observable } from 'rxjs';
-import { selectSettingsState } from '@main-layout/store/selectors/settings.selectors';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { LoadSettings } from '@main-layout/store/actions/settings.actions';
+import { Select, Store } from '@ngxs/store';
+import { SettingsActions } from '@main-layout/store/actions/settings.actions';
+import { Navigate } from '@ngxs/router-plugin';
 
 @Component({
   templateUrl: './settings-page.component.html',
@@ -15,19 +13,19 @@ import { LoadSettings } from '@main-layout/store/actions/settings.actions';
 })
 export class SettingsPageComponent implements OnInit {
 
-  public state$: Observable<SettingsState> = this.store.select(selectSettingsState);
+  @Select(SettingsState) state$: Observable<SettingsStateModel>;
 
   constructor(private readonly store: Store) { }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadSettings());
+    this.store.dispatch(new SettingsActions.Load());
   }
 
   public save(changedSettings: ISettings): void {
-    this.store.dispatch(new SaveSettings({ changedSettings }));
+    this.store.dispatch(new SettingsActions.Save({ changedSettings }));
   }
 
   public goBack(): void {
-    this.store.dispatch(new GoBack());
+    this.store.dispatch(new Navigate(['/']));
   }
 }

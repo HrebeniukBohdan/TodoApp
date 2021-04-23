@@ -1,9 +1,10 @@
-import { ActiveRouteState } from '../../model/router.model';
 import { RouterStateSnapshot } from '@angular/router';
-import { RouterStateSerializer } from '@ngrx/router-store';
+import { ActiveRouteStateModel } from '../../model/router.model';
+import { RouterStateSerializer } from '@ngxs/router-plugin';
 
-export class AppSerializer implements RouterStateSerializer<ActiveRouteState> {
-  serialize(state: RouterStateSnapshot): ActiveRouteState {
+// Map the router snapshot to { url, params, queryParams }
+export class AppRouterStateSerializer implements RouterStateSerializer<ActiveRouteStateModel> {
+  serialize(state: RouterStateSnapshot): ActiveRouteStateModel {
     let currentRoute = state.root;
 
     while (currentRoute.firstChild) {

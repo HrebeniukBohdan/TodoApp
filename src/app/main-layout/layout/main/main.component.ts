@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { MainState } from '@main-layout/store/states/main.state';
+import { Component } from '@angular/core';
 import { MenuRouteData } from '@main-layout/model/menu.model';
-import { Store } from '@ngrx/store';
-import { SignOut } from '@auth-layout/store/actions';
+import { Select, Store } from '@ngxs/store';
+import { AuthActions  } from '@auth-layout/store/actions';
+import { Observable } from 'rxjs';
 
 @Component({
   templateUrl: './main.component.html',
@@ -9,15 +11,12 @@ import { SignOut } from '@auth-layout/store/actions';
 })
 export class MainComponent {
 
-  public menuItems: MenuRouteData[] = [
-    { title: 'Tasks', icon: 'view_list', routerLink: 'tasks' },
-    { title: 'Settings', icon: 'settings', routerLink: 'settings' }
-  ];
+  @Select(MainState) state$: Observable<MenuRouteData[]>;
 
   constructor(private readonly store: Store) { }
 
   public logOut(): void {
-    this.store.dispatch(new SignOut());
+    this.store.dispatch(new AuthActions.SignOut());
   }
 
 }
