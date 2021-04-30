@@ -1,31 +1,35 @@
-import { Component } from '@angular/core';
+import { AuthQuery } from '@auth-layout/state/auth.query';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SignInCredentials } from '@core/model/auth.model';
-import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { AuthState, AuthStateModel } from '@auth-layout/store/states';
-import { AuthActions } from '@auth-layout/store/actions';
-import { Select } from '@ngxs/store';
+import { AuthAction } from '@auth-layout/state/auth.action';
+import { AuthStateModel } from '@auth-layout/state/auth.model';
+import { dispatch } from '@core/utils';
 
 @Component({
   templateUrl: './sign-in-page.component.html',
-  styleUrls: ['./sign-in-page.component.scss']
+  styleUrls: ['./sign-in-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignInPageComponent {
 
-  @Select(AuthState) state$: Observable<AuthStateModel>;
+  state$: Observable<AuthStateModel> = this.query.state$;
 
-  constructor(private readonly store: Store) { }
+  constructor(
+    private readonly action: AuthAction,
+    private readonly query: AuthQuery
+  ) { }
 
   public onSingInSubmit(credentials: SignInCredentials): void {
-    this.store.dispatch(new AuthActions.SignIn({ credentials }));
+    dispatch(this.action.signIn(credentials));
   }
 
   public onPasswordVisibilityClick(): void {
-    this.store.dispatch(new AuthActions.SwitchPasswordVisibility());
+    dispatch(this.action.switchPasswordVisibility());
   }
 
   public onMessageBoxClose(): void {
-    this.store.dispatch(new AuthActions.SignInEraseError());
+    dispatch(this.action.eraseSignInError());
   }
 
 }

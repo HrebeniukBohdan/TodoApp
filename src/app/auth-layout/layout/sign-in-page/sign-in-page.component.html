@@ -1,4 +1,4 @@
-<div class="sign-in-page" fxLayout="column" fxLayoutAlign="center" *ngIf="state$ |async as state">
+<div class="sign-in-page" fxLayout="column" fxLayoutAlign="center" *ngIf="(state$ |async).ui as state">
   <div fxLayout="row" fxLayoutAlign="center">
     <form name="signInForm" class="sign-in-form" fxLayout="column" fxFlex.gt-xs="420px" #form="ngForm">
       <span class="title">Sign In</span>

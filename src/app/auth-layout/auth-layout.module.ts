@@ -1,5 +1,6 @@
-import { AuthState } from './store/states';
-import { NgxsModule } from '@ngxs/store';
+import { AuthQuery } from './state/auth.query';
+import { AuthStore } from './state/auth.store';
+import { AuthAction } from './state/auth.action';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,10 +24,12 @@ import { MatIconModule } from '@angular/material/icon';
     MatCheckboxModule,
     MatInputModule,
     MatIconModule,
-    SharedModule,
-    // StoreModule.forFeature(authFeatureKey, reducer),
-    // EffectsModule.forFeature([AuthEffects]),
-    NgxsModule.forFeature([AuthState])
+    SharedModule
+  ],
+  providers: [
+    AuthAction,
+    AuthStore,
+    AuthQuery
   ]
 })
 export class AuthLayoutModule { }

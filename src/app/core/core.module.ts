@@ -12,6 +12,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsRouterPluginModule, RouterStateSerializer } from '@ngxs/router-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 
 @NgModule({
   declarations: [],
@@ -22,7 +23,8 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     NgxsModule.forRoot([]),
     NgxsStoragePluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
-    environment.production ? [] : NgxsReduxDevtoolsPluginModule.forRoot({ maxAge: 25 })
+    environment.production ? [] : NgxsReduxDevtoolsPluginModule.forRoot({ maxAge: 25 }),
+    environment.production ? [] : AkitaNgDevtools.forRoot()
   ],
   providers: [
     {

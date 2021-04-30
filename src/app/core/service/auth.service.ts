@@ -14,6 +14,7 @@ export class AuthService {
   constructor(@Inject(API_SERVICE) private apiService: IApiService<ServiceType>) { }
 
   public signIn(credentials: SignInCredentials): Observable<SignInResponse> {
+    console.log('SignIn start');
     return this.apiService.post<SignInResponse>(ServiceType.AUTH, 'login', credentials).pipe(
       tap(respose => this.saveToken(respose.token))
     );
