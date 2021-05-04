@@ -144,5 +144,9 @@ export class TasksState {
   }
 
   @Action(TasksActions.CommonFailure)
-  handleError(ctx: StateContext<TasksStateModel>, { payload }: TasksActions.CommonFailure): void {}
+  handleError(ctx: StateContext<TasksStateModel>, { payload }: TasksActions.CommonFailure): void {
+    this.utilsService.showMessage(
+      true, 'Error', [ payload.error.message ], false
+    ).subscribe();
+  }
 }
