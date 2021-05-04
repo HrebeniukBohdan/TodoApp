@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SignInCredentials } from '@core/model/auth.model';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -8,7 +8,8 @@ import { Select } from '@ngxs/store';
 
 @Component({
   templateUrl: './sign-in-page.component.html',
-  styleUrls: ['./sign-in-page.component.scss']
+  styleUrls: ['./sign-in-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignInPageComponent {
 

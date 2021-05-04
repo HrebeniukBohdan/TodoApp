@@ -15,7 +15,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { catchError, map, mapTo, mergeMap, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Navigate, RouterState } from '@ngxs/router-plugin';
-import { ActiveRouteStateModel, RouterStateModel } from '@core/model/router.model';
+import { RouterStateModel } from '@core/model/router.model';
 
 export interface TasksStateModel {
   tasks: TaskData[]|null;
@@ -76,7 +76,7 @@ export class TasksState {
   }
 
   @Action(TasksActions.Add)
-  add(ctx: StateContext<TasksStateModel>, { payload }: TasksActions.Add): Observable<void | TasksStateModel> {
+  add(ctx: StateContext<TasksStateModel>, { payload }: TasksActions.Add): Observable<unknown | TasksStateModel> {
     return this.tasksApi.addNewTask(payload.taskData).pipe(
       map(taskRawData => ctx.patchState({
         tasks: [
@@ -89,7 +89,7 @@ export class TasksState {
   }
 
   @Action(TasksActions.Edit)
-  edit(ctx: StateContext<TasksStateModel>, { payload }: TasksActions.Edit): Observable<void | TasksStateModel> {
+  edit(ctx: StateContext<TasksStateModel>, { payload }: TasksActions.Edit): Observable<unknown | TasksStateModel> {
     return this.tasksApi.editTask(payload.taskData).pipe(
       map(taskRawData => ctx.patchState({
         tasks: UtilsService.replaceListItem(

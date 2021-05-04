@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { AuthService } from '@core/service/auth.service';
 import { AuthActions } from '../actions';
-import { EMPTY, from, Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Navigate } from '@ngxs/router-plugin';
 
 export interface AuthStateModel {
@@ -32,7 +32,7 @@ export class AuthState {
   ) {}
 
   @Action(AuthActions.SignIn)
-  signIn(ctx: StateContext<AuthStateModel>, { payload }: AuthActions.SignIn): Observable<void> {
+  signIn(ctx: StateContext<AuthStateModel>, { payload }: AuthActions.SignIn): Observable<unknown> {
     return this.authApi.signIn(payload.credentials).pipe(
       map(response => ctx.patchState({ ...payload, ...response })),
       mergeMap(() => ctx.dispatch(new Navigate(['/']))),
@@ -44,9 +44,8 @@ export class AuthState {
   }
 
   @Action(AuthActions.SignOut)
-  signOut(ctx: StateContext<AuthStateModel>): Observable<void> {
+  signOut(ctx: StateContext<AuthStateModel>): Observable<unknown> {
     return this.authApi.signOut().pipe(
-      // tap(() => this.router.navigateByUrl('/sign-in')),
       tap(() => ctx.patchState({ token: null, error: null })),
       mergeMap(() => ctx.dispatch(new Navigate(['/sign-in'])))
     );

@@ -1,4 +1,4 @@
-import { MenuRouteData } from './../../model/menu.model';
+import { MenuRouteData } from '@main-layout/model/menu.model';
 import { Injectable } from '@angular/core';
 import { State } from '@ngxs/store';
 

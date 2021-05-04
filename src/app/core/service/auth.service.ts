@@ -19,10 +19,13 @@ export class AuthService {
     );
   }
 
-  public signOut(): Observable<void> {
-    localStorage.removeItem(this.NAME_TOKEN);
-    this.tokenValue = null;
-    return of();
+  public signOut(): Observable<boolean> {
+    return of(true).pipe(
+      tap(() => {
+        localStorage.removeItem(this.NAME_TOKEN);
+        this.tokenValue = null;
+      })
+    );
   }
 
   public get isAuthenticated(): boolean {

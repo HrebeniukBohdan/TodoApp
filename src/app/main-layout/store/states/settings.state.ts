@@ -1,8 +1,8 @@
 import { delay, map, mergeMap } from 'rxjs/operators';
-import { SETTINGS_MODES, SETTINGS_PARAMS } from './../../model/settings.model';
-import { ISettings } from '../../model/settings.model';
-import { IDisplayParameter } from '../../model/common.model';
-import { SettingsService } from '../../service/settings.service';
+import { SETTINGS_MODES, SETTINGS_PARAMS } from '@main-layout/model/settings.model';
+import { ISettings } from '@main-layout/model/settings.model';
+import { IDisplayParameter } from '@main-layout/model/common.model';
+import { SettingsService } from '@main-layout/service/settings.service';
 import { SettingsActions } from '../actions/settings.actions';
 import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
@@ -41,7 +41,7 @@ export class SettingsState {
   }
 
   @Action(SettingsActions.Save)
-  save(ctx: StateContext<SettingsStateModel>, { payload }: SettingsActions.Save): Observable<void> {
+  save(ctx: StateContext<SettingsStateModel>, { payload }: SettingsActions.Save): Observable<unknown> {
     return this.settingsApi.changeSettings(
       payload.changedSettings
     ).pipe(
