@@ -24,8 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatInputModule,
     MatIconModule,
     SharedModule,
-    // StoreModule.forFeature(authFeatureKey, reducer),
-    // EffectsModule.forFeature([AuthEffects]),
     NgxsModule.forFeature([AuthState])
   ]
 })

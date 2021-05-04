@@ -1,4 +1,4 @@
-import { UtilsService } from './../../../shared/service/utils.service';
+import { UtilsService } from '@shared/service/utils.service';
 import { TaskService } from '@main-layout/service/task.service';
 import { TasksActions } from '../actions/tasks.actions';
 import {

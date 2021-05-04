@@ -1,4 +1,4 @@
-import { delay, map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { SETTINGS_MODES, SETTINGS_PARAMS } from '@main-layout/model/settings.model';
 import { ISettings } from '@main-layout/model/settings.model';
 import { IDisplayParameter } from '@main-layout/model/common.model';
