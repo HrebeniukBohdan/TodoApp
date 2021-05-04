@@ -1,11 +1,11 @@
+import { RouterAction } from '@core/router/router.action';
 import { dispatch } from '@core/utils';
 import { SettingsAction } from '@main-layout/state/action/settings.action';
-import { Router } from '@angular/router';
-import { SettingsStateModel } from '@main-layout/store/states/settings.state';
 import { ISettings } from '@main-layout/model/settings.model';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SettingsQuery } from '@main-layout/state/query/settings.query';
+import { SettingsStateModel } from '@main-layout/state/model/settings.model';
 
 @Component({
   templateUrl: './settings-page.component.html',
@@ -17,7 +17,7 @@ export class SettingsPageComponent implements OnInit {
   state$: Observable<SettingsStateModel> = this.query.state$;
 
   constructor(
-    private readonly router: Router,
+    private readonly routerAction: RouterAction,
     private readonly action: SettingsAction,
     private readonly query: SettingsQuery,
   ) { }
@@ -31,6 +31,6 @@ export class SettingsPageComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.router.navigateByUrl('/');
+    dispatch(this.routerAction.navigate('/'));
   }
 }

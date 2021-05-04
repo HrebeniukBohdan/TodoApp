@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { dispatch } from '@core/utils';
+import { RouterAction } from '@core/router/router.action';
 import { AuthStore } from './auth.store';
 import { Injectable } from '@angular/core';
 import { SignInCredentials } from '@core/model/auth.model';
@@ -8,7 +9,7 @@ import { mergeMap, catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthAction {
-  constructor(private authApi: AuthService, private router: Router, private store: AuthStore) {}
+  constructor(private authApi: AuthService, private router: RouterAction, private store: AuthStore) {}
 
   signIn(credentials: SignInCredentials): Observable<unknown> {
     return this.authApi.signIn(credentials).pipe(
@@ -17,7 +18,7 @@ export class AuthAction {
           state => ({ ui: { ...state.ui, credentials }, ...response })
         )
       ),
-      mergeMap(() => this.router.navigate(['/'])),
+      mergeMap(() => dispatch(this.router.navigate('/'))),
       catchError(() => {
         this.store.update(
           state => ({ ui: { ...state.ui, error: { message: 'Username or password is invalid' } } })
@@ -32,7 +33,7 @@ export class AuthAction {
       tap(() => this.store.update(
         state => ({ ui: { ...state.ui, error: null }, token: null })
       )),
-      mergeMap(() => this.router.navigateByUrl('/sign-in'))
+      mergeMap(() => dispatch(this.router.navigate('/sign-in')))
     );
   }
 

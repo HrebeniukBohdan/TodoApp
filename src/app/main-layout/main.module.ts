@@ -1,3 +1,4 @@
+import { TasksQuery } from './state/query/tasks.query';
 import { TasksAction } from './state/action/tasks.action';
 import { TasksStore } from './state/store/tasks.store';
 import { MainQuery } from './state/query/main.query';
@@ -5,10 +6,6 @@ import { MainStore } from './state/store/main.store';
 import { SettingsQuery } from './state/query/settings.query';
 import { SettingsAction } from './state/action/settings.action';
 import { SettingsStore } from './state/store/settings.store';
-import { TasksState } from './store/states/tasks.state';
-import { MainState } from './store/states/main.state';
-import { SettingsState } from './store/states/settings.state';
-import { NgxsModule } from '@ngxs/store';
 
 import { SettingsService } from './service/settings.service';
 import { TaskService } from './service/task.service';
@@ -65,7 +62,6 @@ import { SortCompletedPipe } from './pipe/sort-completed.pipe';
     MatButtonToggleModule,
     MatRadioModule,
     SharedModule,
-    NgxsModule.forFeature([MainState, TasksState, SettingsState])
   ],
   providers: [
     TaskService,
@@ -77,6 +73,7 @@ import { SortCompletedPipe } from './pipe/sort-completed.pipe';
     MainQuery,
     TasksStore,
     TasksAction,
+    TasksQuery
   ]
 })
 export class MainModule { }

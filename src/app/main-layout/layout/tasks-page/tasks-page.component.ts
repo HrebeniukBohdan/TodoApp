@@ -1,9 +1,9 @@
+import { dispatch } from '@core/utils';
+import { TasksAction } from '@main-layout/state/action/tasks.action';
+import { TasksQuery } from '@main-layout/state/query/tasks.query';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ITaskData } from '@main-layout/model/tasks.model';
-import { Store, Select } from '@ngxs/store';
-import { TasksState } from '@main-layout/store/states/tasks.state';
-import { TasksActions } from '@main-layout/store/actions/tasks.actions';
 
 @Component({
   templateUrl: './tasks-page.component.html',
@@ -12,20 +12,23 @@ import { TasksActions } from '@main-layout/store/actions/tasks.actions';
 })
 export class TasksPageComponent implements OnInit {
 
-  @Select(TasksState.selectTasks) tasks$: Observable<ITaskData[]>;
+  tasks$: Observable<ITaskData[]> = this.query.tasks$;
 
-  constructor(private readonly store: Store) { }
+  constructor(
+    private readonly query: TasksQuery,
+    private readonly action: TasksAction
+  ) { }
 
   public ngOnInit(): void {
-    this.store.dispatch(new TasksActions.Load());
+    dispatch(this.action.load());
   }
 
   public gotoTaskPage(taskId: string): void {
-    this.store.dispatch(new TasksActions.GotoTaskPage({ taskId }));
+    dispatch(this.action.gotoTaskPage(taskId));
   }
 
   public changeTaskStatus(taskData: ITaskData): void {
-    this.store.dispatch(new TasksActions.ChangeStatus({ taskData }));
+    dispatch(this.action.changeStatus(taskData));
   }
 
 }
