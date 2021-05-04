@@ -1,6 +1,6 @@
 # TodoApp
 
-This project was developed to learn using of Angular state management approaches and demo NgRx technology.
+This project was developed to learn using of Angular state management approaches and demo Akita technology.
 
 ## Run
 
@@ -14,8 +14,6 @@ Sign in credentials for the stub:
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-Run `ng generate @ngrx/schematics:action` to generate an action. [See more for NgRx schematics](https://ngrx.io/guide/schematics).
 
 ## Build
 
