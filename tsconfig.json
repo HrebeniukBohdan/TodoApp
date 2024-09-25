@@ -10,19 +10,32 @@
     "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "lib": [
       "es2018",
       "dom"
     ],
     "paths": {
-      "@shared/*": ["src/app/shared/*"],
-      "@assets/*": ["src/app/assets/*"],
-      "@core/*": ["src/app/core/*"],
-      "@main-layout/*": ["src/app/main-layout/*"],
-      "@auth-layout/*": ["src/app/auth-layout/*"],
-      "@environments/*": ["src/environments/*"]
-    }
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@assets/*": [
+        "src/app/assets/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@main-layout/*": [
+        "src/app/main-layout/*"
+      ],
+      "@auth-layout/*": [
+        "src/app/auth-layout/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ]
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
