@@ -18,31 +18,28 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-  declarations: [
-    SpinnerShowDirective,
-    LoadingScreenComponent,
-    MessageBoxComponent,
-    MessageDialogComponent
-  ],
-  exports: [
-    SpinnerShowDirective,
-    LoadingScreenComponent,
-    MessageBoxComponent
-  ],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    FlexLayoutModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatIconModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatButtonModule
-  ],
-  entryComponents: [
-    MessageDialogComponent
-  ]
+    declarations: [
+        SpinnerShowDirective,
+        LoadingScreenComponent,
+        MessageBoxComponent,
+        MessageDialogComponent
+    ],
+    exports: [
+        SpinnerShowDirective,
+        LoadingScreenComponent,
+        MessageBoxComponent
+    ],
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        FlexLayoutModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatIconModule,
+        MatDialogModule,
+        MatToolbarModule,
+        MatButtonModule
+    ]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders<SharedModule> {
