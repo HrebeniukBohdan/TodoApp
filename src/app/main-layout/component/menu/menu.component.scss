@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '~src/theme';
 
 .menu-item {
@@ -13,11 +14,11 @@
   }
 
   &:hover {
-    background-color: mat-color($accent, 100);
+    background-color: mat.get-color-from-palette($accent, 100);
   }
 
   &.active {
-    background-color: mat-color($accent);
-    color: mat-contrast($accent, default);
+    background-color: mat.get-color-from-palette($accent);
+    color: mat.get-contrast-color-from-palette($accent, default);
   }
 }
