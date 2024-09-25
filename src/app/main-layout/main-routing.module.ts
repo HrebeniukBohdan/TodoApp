@@ -9,7 +9,7 @@ import { TaskPageComponent } from './layout/task-page/task-page.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent, children: [
-      { path: '', redirectTo: 'tasks'},
+      { path: '', pathMatch:'full', redirectTo: 'tasks'},
       { path: 'settings', component: SettingsPageComponent },
       { path: 'tasks', component: TasksPageComponent },
       { path: 'tasks/one/:id', component: TaskPageComponent, canDeactivate: [SaveChangesGuard] }

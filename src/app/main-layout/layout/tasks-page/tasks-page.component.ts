@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '@main-layout/service/task.service';
 import { Observable } from 'rxjs';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
@@ -13,7 +13,7 @@ export class TasksPageComponent implements OnInit {
 
   public tasks$: Observable<ITaskData[]>;
 
-  constructor(private tasksService: TaskService, private router: Router) { }
+  constructor(private tasksService: TaskService, private router: Router, private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
     this.tasks$ = this.tasksService.tasks$;
@@ -25,7 +25,7 @@ export class TasksPageComponent implements OnInit {
   }
 
   public gotoEditScreen(task: ITaskData): void {
-    this.router.navigate(['one', task.id]);
+    this.router.navigate(['one', task.id], { relativeTo: this.route });
   }
 
   public changeTaskStatus(task: ITaskData): void {
