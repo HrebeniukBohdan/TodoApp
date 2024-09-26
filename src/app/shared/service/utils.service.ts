@@ -1,7 +1,7 @@
 import { MessageDialogComponent } from '@shared/component/message-dialog/message-dialog.component';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 @Injectable()
 export class UtilsService {
