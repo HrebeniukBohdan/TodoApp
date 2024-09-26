@@ -1,0 +1,58 @@
+.fx-layout {
+  display: flex;
+
+  &.fx-row {
+    flex-direction: row;
+
+    &.align-start {
+      justify-content: flex-start;
+    }
+    &.align-end {
+      justify-content: flex-end;
+    }
+    &.align-center {
+      justify-content: center;
+    }
+    &.align-space-between {
+      justify-content: space-between;
+    }
+    &.align-space-around {
+      justify-content: space-around;
+    }
+  }
+  &.fx-col {
+    flex-direction: column;
+
+    &.align-start {
+      justify-content: flex-start;
+    }
+    &.align-end {
+      justify-content: flex-end;
+    }
+    &.align-center {
+      justify-content: center;
+    }
+    &.align-space-between {
+      justify-content: space-between;
+    }
+    &.align-space-around {
+      justify-content: space-around;
+    }
+  }
+  &.wrap {
+    flex-wrap: wrap;
+  }
+  &.nowrap {
+    flex-wrap: nowrap;
+  }
+
+  @for $i from 1 through 10 {
+    &.gap-#{5 * $i} {
+      gap: $i * 5px;
+    }
+  }
+}
+
+.fx-cell {
+  flex: 1;
+}

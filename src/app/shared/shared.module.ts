@@ -1,6 +1,6 @@
-import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { UtilsService } from '@shared/service/utils.service';
-import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppConfig, resolveAppConfigFactory } from '@shared/service/app-config.service';
 import { ApiService, API_SERVICE } from '@shared/service/api.service';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
@@ -9,11 +9,11 @@ import { SpinnerService } from '@shared/service/spinner.service';
 import { SpinnerShowDirective } from '@shared/directive/spinner-show.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingScreenComponent } from '@shared/component/loading-screen/loading-screen.component';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MessageBoxComponent } from '@shared/component/message-box/message-box.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MessageDialogComponent } from '@shared/component/message-dialog/message-dialog.component';
-import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({

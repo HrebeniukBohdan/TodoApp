@@ -1,14 +1,14 @@
-<div class="sign-in-page" fxLayout="column" fxLayoutAlign="center">
-  <div fxLayout="row" fxLayoutAlign="center">
-    <form name="signInForm" class="sign-in-form" fxLayout="column" fxFlex.gt-xs="420px">
+<div class="sign-in-page fx-layout fx-col align-center">
+  <div class="fx-layout fx-row align-center">
+    <form name="signInForm" class="sign-in-form fx-layout fx-col">
       <span class="title">Sign In</span>
       <span class="instruction">Enter your credentials below to continue:</span>
-      <mat-form-field appearance="outline" fxFlex>
+      <mat-form-field appearance="outline" class="fx-cell">
         <mat-label>Username</mat-label>
         <mat-icon matPrefix>face</mat-icon>
         <input matInput name="username" [(ngModel)]="params.username">
       </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex>
+      <mat-form-field appearance="outline" class="fx-cell">
         <mat-label>Password</mat-label>
         <mat-icon matPrefix>lock</mat-icon>
         <input matInput name="password" [type]="hide ? 'password' : 'text'" [(ngModel)]="params.password">
@@ -16,10 +16,10 @@
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
-      <div fxLayout="column" fxLayoutGap="15px">
+      <div class="fx-layout fx-col gap-15">
         <app-message-box *ngIf="error" (closeClick)="onMessageBoxClose()">{{error.message}}</app-message-box>
-        <div fxLayout="row nowrap" fxLayoutGap="10px">
-          <button mat-stroked-button color="primary" fxFlex (click)="onSingInClick()">Sign In</button>
+        <div class="fx-layout fx-row gap-10">
+          <button mat-stroked-button color="primary" class="fx-cell" (click)="onSingInClick()">Sign In</button>
         </div>
       </div>
     </form>
