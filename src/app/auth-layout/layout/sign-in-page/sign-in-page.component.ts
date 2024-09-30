@@ -8,7 +8,6 @@ import { SignInCredentials } from '@core/model/auth.model';
   styleUrls: ['./sign-in-page.component.scss']
 })
 export class SignInPageComponent {
-
   public params: SignInCredentials = { username: null, password: null };
   public hide: boolean = true;
   public error: { message: string };

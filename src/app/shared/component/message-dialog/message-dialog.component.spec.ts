@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MessageDialogComponent } from './message-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('MessageDialogComponent', () => {
   let component: MessageDialogComponent;
@@ -8,6 +9,10 @@ describe('MessageDialogComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [
+        { provide: MatDialogRef<MessageDialogComponent>, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
       declarations: [ MessageDialogComponent ]
     })
     .compileComponents();

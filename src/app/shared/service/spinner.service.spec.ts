@@ -6,7 +6,7 @@ describe('SpinnerService', () => {
   let service: SpinnerService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({providers: [SpinnerService]});
     service = TestBed.inject(SpinnerService);
   });
 

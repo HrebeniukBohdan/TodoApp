@@ -1,5 +1,5 @@
 @use '@angular/material' as mat;
-@import '@angular/material/theming';
+//@import '@angular/material/core/theming';
 
 // Include non-theme styles for core.
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
@@ -29,10 +29,12 @@
 //
 // TODO(v17): Please move these @include statements to the preferred place in your Sass, and pass
 // your theme to them. This will ensure the correct values for your app are included.
-@include mat.all-component-bases(/* TODO(v17): pass $your-theme here */);
+
 
 
 // Define your application's custom theme.
 $primary: mat.define-palette(mat.$deep-purple-palette);
 $accent:  mat.define-palette(mat.$amber-palette);
 $theme: mat.define-light-theme($primary, $accent);
+
+@include mat.all-component-bases($theme);

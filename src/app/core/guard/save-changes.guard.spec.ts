@@ -6,7 +6,7 @@ describe('SaveChangesGuard', () => {
   let guard: SaveChangesGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({providers: [SaveChangesGuard]});
     guard = TestBed.inject(SaveChangesGuard);
   });
 
