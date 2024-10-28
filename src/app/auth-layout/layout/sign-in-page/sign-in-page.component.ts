@@ -15,11 +15,6 @@ export class SignInPageComponent {
   constructor(private authService: AuthService, private router: Router) { }
 
   public onSingInClick(): void {
-    const array = [];
-    for (let index = 0; index < 1000000; index++) {
-      array[index] = index;
-    }
-    
     this.authService.signIn(this.params).subscribe(
       () => this.router.navigateByUrl('/'),
       () => this.error = { message: 'Username or password is invalid' }
