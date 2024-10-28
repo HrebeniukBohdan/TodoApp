@@ -1,33 +1,27 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpEvent, HttpHandler, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { SpectatorService, createServiceFactory } from '@ngneat/spectator/jest';
+import { HttpEvent, HttpRequest } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { AuthService } from '@core/service/auth.service';
 import { of } from 'rxjs';
 
 describe('AuthInterceptor', () => {
+  let spectator: SpectatorService<AuthInterceptor>;
   let interceptor: AuthInterceptor;
-  let authService: jasmine.SpyObj<AuthService>;
-  let next: jasmine.SpyObj<HttpHandler>;
+  let authService: jest.Mocked<AuthService>;
+  let next: { handle: jest.Mock };
+
+  const createService = createServiceFactory({
+    service: AuthInterceptor,
+    mocks: [AuthService],
+  });
 
   beforeEach(() => {
-    const authServiceSpy = jasmine.createSpyObj('AuthService', ['signIn', 'signOut'], {
-      isAuthenticated: false,
-      token: null,
-    });
+    spectator = createService();
+    interceptor = spectator.service;
+    authService = spectator.inject(AuthService) as jest.Mocked<AuthService>;
 
-    const nextSpy = jasmine.createSpyObj('HttpHandler', ['handle']);
-
-    TestBed.configureTestingModule({
-      providers: [
-        AuthInterceptor,
-        { provide: AuthService, useValue: authServiceSpy },
-        { provide: HttpHandler, useValue: nextSpy }
-      ]
-    });
-
-    interceptor = TestBed.inject(AuthInterceptor);
-    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
-    next = TestBed.inject(HttpHandler) as jasmine.SpyObj<HttpHandler>;
+    // Мокування next.handle, який повертатиме Observable
+    next = { handle: jest.fn().mockReturnValue(of({} as HttpEvent<any>)) };
   });
 
   it('should add x-auth-token header if the user is authenticated', () => {
@@ -36,15 +30,13 @@ describe('AuthInterceptor', () => {
     Object.defineProperty(authService, 'token', { get: () => 'test-token' });
 
     const request = new HttpRequest('GET', '/test-url');
-    
-    next.handle.and.returnValue(of({} as HttpEvent<any>));
 
     interceptor.intercept(request, next).subscribe();
 
-    const httpRequestCaptor = next.handle.calls.mostRecent().args[0] as HttpRequest<any>;
+    const httpRequestCaptor = next.handle.mock.calls[0][0] as HttpRequest<any>;
 
     // Перевіряємо, що заголовок було додано
-    expect(httpRequestCaptor.headers.has('x-auth-token')).toBeTrue();
+    expect(httpRequestCaptor.headers.has('x-auth-token')).toBe(true);
     expect(httpRequestCaptor.headers.get('x-auth-token')).toBe('test-token');
   });
 
@@ -54,13 +46,11 @@ describe('AuthInterceptor', () => {
 
     const request = new HttpRequest('GET', '/test-url');
 
-    next.handle.and.returnValue(of({} as HttpEvent<any>));
-
     interceptor.intercept(request, next).subscribe();
 
-    const httpRequestCaptor = next.handle.calls.mostRecent().args[0] as HttpRequest<any>;
+    const httpRequestCaptor = next.handle.mock.calls[0][0] as HttpRequest<any>;
 
     // Перевіряємо, що заголовок не було додано
-    expect(httpRequestCaptor.headers.has('x-auth-token')).toBeFalse();
+    expect(httpRequestCaptor.headers.has('x-auth-token')).toBe(false);
   });
 });

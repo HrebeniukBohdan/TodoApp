@@ -1,13 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 import { SpinnerService } from './spinner.service';
 
 describe('SpinnerService', () => {
+  let spectator: SpectatorService<SpinnerService>;
   let service: SpinnerService;
 
+  const createService = createServiceFactory({
+    service: SpinnerService,
+  });
+
   beforeEach(() => {
-    TestBed.configureTestingModule({providers: [SpinnerService]});
-    service = TestBed.inject(SpinnerService);
+    spectator = createService();
+    service = spectator.service;
   });
 
   it('should be created', () => {
@@ -17,33 +21,33 @@ describe('SpinnerService', () => {
   it('should return an Observable with "true" value', (done) => {
     service.capture();
     service.status$.subscribe(result => {
-      expect(result).toBeTrue();
-      expect(service.status).toBeTrue();
+      expect(result).toBe(true);
+      expect(service.status).toBe(true);
       done();
     });
   });
 
   it('should return an Observable with "true" value after 2 captures and 1 release', (done) => {
-    expect(service.status).toBeFalse();
+    expect(service.status).toBe(false);
     service.capture();
     service.capture();
     service.release();
     service.status$.subscribe(result => {
-      expect(result).toBeTrue();
-      expect(service.status).toBeTrue();
+      expect(result).toBe(true);
+      expect(service.status).toBe(true);
       done();
     });
   });
 
   it('should return an Observable with "false" value after 2 captures and 2 releases', (done) => {
-    expect(service.status).toBeFalse();
+    expect(service.status).toBe(false);
     service.capture();
     service.capture();
     service.release();
     service.release();
     service.status$.subscribe(result => {
-      expect(result).toBeFalse();
-      expect(service.status).toBeFalse();
+      expect(result).toBe(false);
+      expect(service.status).toBe(false);
       done();
     });
   });

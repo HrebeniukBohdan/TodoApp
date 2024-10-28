@@ -1,31 +1,26 @@
-import { TestBed } from '@angular/core/testing';
+import { SpectatorService, createServiceFactory } from '@ngneat/spectator/jest';
 import { UtilsService } from './utils.service';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 import { MessageDialogComponent } from '@shared/component/message-dialog/message-dialog.component';
 
 describe('UtilsService', () => {
+  let spectator: SpectatorService<UtilsService>;
   let service: UtilsService;
-  let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let dialogSpy: jest.Mocked<MatDialog>;
+
+  const createService = createServiceFactory({
+    service: UtilsService,
+    mocks: [MatDialog]
+  });
 
   beforeEach(() => {
-    const dialogRefSpyObj = jasmine.createSpyObj({
-      afterClosed: of(true)
-    });
-
-    const matDialogSpy = jasmine.createSpyObj('MatDialog', {
-      open: dialogRefSpyObj
-    });
-
-    TestBed.configureTestingModule({
-      providers: [
-        UtilsService,
-        { provide: MatDialog, useValue: matDialogSpy }
-      ]
-    });
-
-    service = TestBed.inject(UtilsService);
-    dialogSpy = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>;
+    spectator = createService();
+    service = spectator.service;
+    dialogSpy = spectator.inject(MatDialog) as jest.Mocked<MatDialog>;
+    dialogSpy.open.mockReturnValue({
+      afterClosed: () => of(true)
+    } as any);
   });
 
   it('should be created', () => {
@@ -49,14 +44,10 @@ describe('UtilsService', () => {
 
     it('should return an Observable when dialog is closed', (done) => {
       service.showMessage(true, 'Error Title', 'Error Message', false).subscribe(result => {
-        expect(result).toBeTrue();
+        expect(result).toBe(true);
         done();
       });
     });
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
   });
 
   it('should return a copy and each field must equal to its origin field', () => {
@@ -71,7 +62,7 @@ describe('UtilsService', () => {
       list: [
         'string', 10, null, true
       ]
-    }
+    };
     const copy = service.deepCopy(original);
 
     expect(copy).not.toBe(original);
