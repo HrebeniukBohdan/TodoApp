@@ -1,5 +1,5 @@
 <div class="task" matRipple [ngClass]="data.proirity" [class.disabled]="data.completed">
-  <mat-checkbox [ngModel]="data.completed" color="primary" [disabled]="data.completed" (click)="onCheckboxClick($event)"></mat-checkbox>
+  <mat-checkbox [checked]="data.completed" color="primary" [disabled]="data.completed" (click)="onCheckboxClick()"></mat-checkbox>
   <div class="fx-layout fx-row fx-cell"(click)="editClick.emit()">
     <span class="text fx-cell">{{ data.title }}</span>
     <mat-icon *ngIf="data.desc">description</mat-icon>

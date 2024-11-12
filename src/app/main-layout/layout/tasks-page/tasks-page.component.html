@@ -1,5 +1,5 @@
 <div style="height: 100%; overflow-y: auto;">
-  @for (item of tasks$ | async | sortCompleted; track item.id) {
+  @for (item of tasks | sortCompleted; track item.id) {
     <app-task-item
       (editClick)="gotoEditScreen(item)"
       (changeState)="changeTaskStatus($event)"

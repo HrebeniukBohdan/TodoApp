@@ -11,13 +11,14 @@ import { ITaskData } from '@main-layout/model/tasks.model';
 })
 export class TasksPageComponent implements OnInit {
 
-  public tasks$: Observable<ITaskData[]>;
-
   constructor(private tasksService: TaskService, private router: Router, private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
-    this.tasks$ = this.tasksService.tasks$;
     this.fetch();
+  }
+
+  public get tasks() {
+    return this.tasksService.tasks;
   }
 
   public fetch(): void {
